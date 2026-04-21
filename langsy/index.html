@@ -131,11 +131,17 @@
     display: flex;
     gap: 28px;
     overflow-x: auto;
-    padding: 40px 0;
+    padding: 40px 24px;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    justify-content: center;
   }
   .screens-row::-webkit-scrollbar { display: none; }
+  /* On narrow viewports the row scrolls horizontally and we want the first
+     screenshot flush with the container's left padding, not centered. */
+  @media (max-width: 960px) {
+    .screens-row { justify-content: flex-start; }
+  }
   .phone {
     flex: 0 0 auto;
     width: 280px;
