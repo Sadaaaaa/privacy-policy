@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Langsy — Speak Like a Native. Every Day.</title>
+<meta name="description" content="AI-powered language tutor in your pocket. Real conversations, pronunciation practice, and listening tests — all tuned to your level.">
+<meta property="og:title" content="Langsy — AI Language Tutor">
+<meta property="og:description" content="Speak, not translate. Your personal AI tutor that adapts to your level.">
+<meta property="og:image" content="icon.png">
+<style>
+  :root {
+    --bg: #0C0A14;
+    --bg-elev: #161225;
+    --bg-card: #1C1730;
+    --fg: #F4F0FF;
+    --fg-sec: #9B93B0;
+    --fg-muted: #6A6280;
+    --accent: #0EA5E9;
+    --accent-2: #38BDF8;
+    --border: rgba(255,255,255,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* Subtle global glow */
+  body {
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(14,165,233,0.18), transparent 50%),
+      radial-gradient(circle at 85% 10%, rgba(56,189,248,0.12), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Nav */
+  nav {
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+  }
+  .logo img { width: 32px; height: 32px; border-radius: 8px; }
+  nav .links { display: flex; gap: 28px; color: var(--fg-sec); font-size: 14px; }
+  nav .links a:hover { color: var(--fg); }
+
+  /* Hero */
+  header.hero {
+    padding: 72px 0 56px;
+    text-align: center;
+  }
+  .hero img.icon {
+    width: 112px;
+    height: 112px;
+    border-radius: 28px;
+    box-shadow: 0 24px 60px rgba(14,165,233,0.35);
+    margin-bottom: 28px;
+  }
+  h1 {
+    font-size: clamp(40px, 6vw, 68px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #9B93B0 130%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p.sub {
+    font-size: clamp(17px, 2vw, 20px);
+    color: var(--fg-sec);
+    max-width: 620px;
+    margin: 0 auto 36px;
+  }
+  .cta-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    border: 1px solid var(--border);
+  }
+  .btn.primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: white;
+    border: none;
+    box-shadow: 0 12px 30px rgba(14,165,233,0.35);
+  }
+  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(14,165,233,0.45); }
+  .btn.secondary {
+    background: var(--bg-elev);
+    color: var(--fg);
+  }
+  .btn.secondary:hover { background: var(--bg-card); }
+  .btn .dim { color: rgba(255,255,255,0.7); font-size: 11px; font-weight: 500; display: block; }
+
+  /* Screens strip */
+  section.screens {
+    padding: 40px 0 80px;
+  }
+  .screens-row {
+    display: flex;
+    gap: 28px;
+    overflow-x: auto;
+    padding: 40px 0;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .screens-row::-webkit-scrollbar { display: none; }
+  .phone {
+    flex: 0 0 auto;
+    width: 280px;
+    scroll-snap-align: center;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow:
+      0 32px 64px rgba(14,165,233,0.25),
+      0 0 0 1px var(--border);
+    background: #000;
+  }
+  .phone img { width: 100%; display: block; }
+
+  /* Features */
+  section.features {
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+  }
+  .section-head {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .section-head h2 {
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+  .section-head p {
+    color: var(--fg-sec);
+    font-size: 17px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .feature {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+  }
+  .feature .icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(14,165,233,0.2), rgba(56,189,248,0.1));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 18px;
+  }
+  .feature h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .feature p { color: var(--fg-sec); font-size: 15px; }
+
+  /* CTA bottom */
+  section.cta {
+    padding: 80px 0 60px;
+    text-align: center;
+  }
+  .cta-card {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border-radius: 28px;
+    padding: 64px 32px;
+    box-shadow: 0 32px 80px rgba(14,165,233,0.25);
+  }
+  .cta-card h2 {
+    color: white;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 14px;
+  }
+  .cta-card p { color: rgba(255,255,255,0.9); font-size: 17px; margin-bottom: 28px; }
+  .cta-card .btn.secondary { background: rgba(255,255,255,0.18); color: white; border: 1px solid rgba(255,255,255,0.25); }
+  .cta-card .btn.secondary:hover { background: rgba(255,255,255,0.28); }
+
+  /* Footer */
+  footer {
+    padding: 48px 0 60px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--fg-muted);
+    font-size: 14px;
+  }
+  footer .links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+  footer a:hover { color: var(--fg); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <nav>
+    <div class="logo">
+      <img src="icon.png" alt="Langsy">
+      Langsy
+    </div>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <img src="icon.png" alt="Langsy icon" class="icon">
+    <h1>Speak like a native.<br>Every day.</h1>
+    <p class="sub">Your AI language tutor in your pocket. Real conversations, pronunciation practice, and listening tests — all tuned to your level.</p>
+    <div class="cta-row">
+      <a href="#" class="btn primary">
+        <span>Download on the App Store</span>
+      </a>
+      <a href="#" class="btn secondary">
+        <span>Get it on Google Play</span>
+      </a>
+    </div>
+  </header>
+</div>
+
+<section class="screens">
+  <div class="screens-row">
+    <div class="phone"><img src="screen_home.png" alt="Home"></div>
+    <div class="phone"><img src="screen_voice.png" alt="Voice chat"></div>
+    <div class="phone"><img src="screen_repeat.png" alt="Repeat practice"></div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-head">
+      <h2>Learn by speaking, not translating</h2>
+      <p>Everything you need to hold real conversations, minus the flashcards.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="icon">🗣️</div>
+        <h3>AI conversations</h3>
+        <p>Talk to an AI tutor that adapts to your CEFR level and nudges you when you get stuck.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🎧</div>
+        <h3>Listening practice</h3>
+        <p>Short monologues with comprehension questions. New passages every day.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔁</div>
+        <h3>Phrase repeating</h3>
+        <p>Real-life situations with phrase-by-phrase pronunciation scoring.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">📈</div>
+        <h3>Track your level</h3>
+        <p>Automatic CEFR estimation (A1–C2) that updates as you practice.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">💾</div>
+        <h3>Sync across devices</h3>
+        <p>Sign in with Google or Apple to keep progress on every device you own.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🕶️</div>
+        <h3>Guest mode</h3>
+        <p>Try everything without an account. Create one later to save progress.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <div class="cta-card">
+      <h2>Start speaking today</h2>
+      <p>Free to download. No account required to try it.</p>
+      <div class="cta-row">
+        <a href="#" class="btn secondary">App Store</a>
+        <a href="#" class="btn secondary">Google Play</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="delete-account.html">Delete Account</a>
+      <a href="mailto:sergmochalin@gmail.com">Contact</a>
+    </div>
+    <div>© 2026 KitchenTech. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
