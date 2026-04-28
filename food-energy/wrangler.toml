@@ -1,0 +1,5 @@
+name = "food-energy-landing"
+compatibility_date = "2026-04-28"
+
+[assets]
+directory = "."
