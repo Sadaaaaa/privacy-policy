@@ -23,12 +23,12 @@
 <div class="container">
 
 <h1>Terms of Use</h1>
-<p class="updated">Last updated: April 26, 2026</p>
+<p class="updated">Last updated: April 30, 2026</p>
 
 <p>Welcome to Food Energy ("the App"). By using the App, you agree to these Terms of Use. If you do not agree, please do not use the App.</p>
 
 <h2>1. Description of Service</h2>
-<p>Food Energy is a mobile application that uses artificial intelligence to estimate the nutritional content of food from photos and text descriptions, and to look up packaged products by barcode. The App stores your meal history and preferences locally on your device. AI requests are routed through a thin proxy server we operate (Cloudflare Worker) and forwarded to third-party AI providers; barcode lookups are sent to Open Food Facts.</p>
+<p>Food Energy is a mobile application that uses artificial intelligence to estimate the nutritional content of food from photos and text descriptions, and to look up packaged products by barcode. The App stores your meal history and preferences locally on your device. AI requests are routed through a thin proxy server we operate (Google Cloud Run) and forwarded to third-party AI providers; barcode lookups are sent to Open Food Facts.</p>
 <p>Nutritional estimates are approximate and should not be used as a substitute for professional dietary advice.</p>
 
 <h2>2. Subscription</h2>
@@ -57,7 +57,7 @@
 <p>The App relies on the following external services to provide its functionality. Each receives only the minimum data required for its specific function:</p>
 <ul>
   <li><strong>Anthropic Claude API</strong>, <strong>Google Gemini API</strong>, and <strong>Mistral AI API</strong> &mdash; analyze food photos and text descriptions</li>
-  <li><strong>Cloudflare Workers</strong> &mdash; operates the proxy that routes AI requests; may briefly log request metadata (IP, timestamp) for abuse prevention</li>
+  <li><strong>Google Cloud Platform</strong> (Cloud Run, Firestore) &mdash; hosts the proxy that routes AI requests and stores anonymous abuse-prevention counters (auto-deleted after 48 hours)</li>
   <li><strong>Open Food Facts</strong> &mdash; looks up packaged products by barcode</li>
   <li><strong>RevenueCat</strong> &mdash; manages subscription state and validates store receipts</li>
 </ul>
