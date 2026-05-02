@@ -18,6 +18,8 @@
     --fg-muted: #62736A;
     --accent: #34C759;
     --accent-2: #4CAF6E;
+    --gplay-1: #4285F4;
+    --gplay-2: #1A73E8;
     --border: rgba(255,255,255,0.08);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,7 +32,6 @@
   }
   a { color: inherit; text-decoration: none; }
 
-  /* Subtle global glow */
   body {
     background-image:
       radial-gradient(circle at 15% 0%, rgba(52,199,89,0.18), transparent 50%),
@@ -44,7 +45,6 @@
     padding: 0 24px;
   }
 
-  /* Nav */
   nav {
     padding: 20px 0;
     display: flex;
@@ -60,10 +60,21 @@
     letter-spacing: -0.3px;
   }
   .logo img { width: 32px; height: 32px; border-radius: 8px; }
-  nav .links { display: flex; gap: 28px; color: var(--fg-sec); font-size: 14px; }
+  nav .links { display: flex; gap: 28px; color: var(--fg-sec); font-size: 14px; align-items: center; }
   nav .links a:hover { color: var(--fg); }
+  nav .lang-switch {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    color: var(--fg-sec);
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  nav .lang-switch:hover { color: var(--fg); border-color: var(--accent); }
 
-  /* Hero */
   header.hero {
     padding: 72px 0 56px;
     text-align: center;
@@ -102,31 +113,49 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 14px 24px;
+    padding: 14px 22px;
     border-radius: 12px;
     font-weight: 600;
     font-size: 15px;
     transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
     border: 1px solid var(--border);
   }
-  .btn.primary {
+  .btn svg { flex-shrink: 0; }
+  .btn.appstore {
     background: linear-gradient(135deg, var(--accent), var(--accent-2));
     color: white;
     border: none;
     box-shadow: 0 12px 30px rgba(52,199,89,0.35);
   }
-  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(52,199,89,0.45); }
+  .btn.appstore:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(52,199,89,0.45); }
+  .btn.gplay {
+    background: linear-gradient(135deg, var(--gplay-1), var(--gplay-2));
+    color: white;
+    border: none;
+    box-shadow: 0 12px 30px rgba(66,133,244,0.35);
+  }
+  .btn.gplay:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(66,133,244,0.45); }
   .btn.secondary {
     background: var(--bg-elev);
     color: var(--fg);
   }
   .btn.secondary:hover { background: var(--bg-card); }
-  .btn .dim { color: rgba(255,255,255,0.7); font-size: 11px; font-weight: 500; display: block; }
-
-  /* Screens strip */
-  section.screens {
-    padding: 40px 0 80px;
+  .btn-text-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.15;
   }
+  .btn-text-stack .small {
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0.85;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .btn-text-stack .big { font-size: 15px; font-weight: 700; }
+
+  section.screens { padding: 40px 0 80px; }
   .screens-row {
     display: flex;
     gap: 28px;
@@ -153,7 +182,6 @@
   }
   .phone img { width: 100%; display: block; }
 
-  /* Features */
   section.features {
     padding: 80px 0;
     border-top: 1px solid var(--border);
@@ -199,11 +227,7 @@
   .feature h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
   .feature p { color: var(--fg-sec); font-size: 15px; }
 
-  /* CTA bottom */
-  section.cta {
-    padding: 80px 0 60px;
-    text-align: center;
-  }
+  section.cta { padding: 80px 0 60px; text-align: center; }
   .cta-card {
     background: linear-gradient(135deg, var(--accent), var(--accent-2));
     border-radius: 28px;
@@ -221,7 +245,6 @@
   .cta-card .btn.secondary { background: rgba(255,255,255,0.18); color: white; border: 1px solid rgba(255,255,255,0.25); }
   .cta-card .btn.secondary:hover { background: rgba(255,255,255,0.28); }
 
-  /* Footer */
   footer {
     padding: 48px 0 60px;
     border-top: 1px solid var(--border);
@@ -247,22 +270,45 @@
       Food Energy
     </div>
     <div class="links">
-      <a href="#features">Features</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
+      <a href="#features" data-i18n="navFeatures">Features</a>
+      <a href="/privacy" data-i18n="navPrivacy">Privacy</a>
+      <a href="/terms" data-i18n="navTerms">Terms</a>
+      <button class="lang-switch" id="langSwitch">RU</button>
     </div>
   </nav>
 
   <header class="hero">
     <img src="icon.png" alt="Food Energy icon" class="icon">
-    <h1>Snap a meal.<br>Get the macros.</h1>
-    <p class="sub">AI-powered calorie counter that turns a photo into calories, protein, carbs and fat in seconds. Scan barcodes for packaged products. Your data stays on your device.</p>
+    <h1 data-i18n-html="heroTitle">Snap a meal.<br>Get the macros.</h1>
+    <p class="sub" data-i18n="heroSub">AI-powered calorie counter that turns a photo into calories, protein, carbs and fat in seconds. Scan barcodes for packaged products. Your data stays on your device.</p>
     <div class="cta-row">
-      <a href="https://apps.apple.com/tr/app/food-energy/id6762185070" class="btn primary" target="_blank" rel="noopener">
-        <span>Download on the App Store</span>
+      <a href="https://apps.apple.com/tr/app/food-energy/id6762185070" class="btn appstore" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true">
+          <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+        </svg>
+        <span class="btn-text-stack">
+          <span class="small" data-i18n="storeDownloadOn">Download on the</span>
+          <span class="big" data-i18n="storeAppStore">App Store</span>
+        </span>
       </a>
-      <a href="https://play.google.com/store/apps/details?id=com.kitchentech.calorie_ai_app" class="btn secondary" target="_blank" rel="noopener">
-        <span>Get it on Google Play</span>
+      <a href="https://play.google.com/store/apps/details?id=com.kitchentech.calorie_ai_app" class="btn gplay" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
+          <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+        </svg>
+        <span class="btn-text-stack">
+          <span class="small" data-i18n="storeGetItOn">Get it on</span>
+          <span class="big" data-i18n="storeGooglePlay">Google Play</span>
+        </span>
+      </a>
+      <a href="/buy/" class="btn secondary">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 12V8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>
+          <path d="M16 14h-2a2 2 0 1 1 0-4h2"/>
+        </svg>
+        <span class="btn-text-stack">
+          <span class="small" data-i18n="storePromoSmall">Or pay with card</span>
+          <span class="big" data-i18n="storePromoBig">Buy promo code</span>
+        </span>
       </a>
     </div>
   </header>
@@ -279,39 +325,39 @@
 <section class="features" id="features">
   <div class="container">
     <div class="section-head">
-      <h2>Track food without the friction</h2>
-      <p>No databases to search, no portion sizes to remember. Just point and tap.</p>
+      <h2 data-i18n="featuresTitle">Track food without the friction</h2>
+      <p data-i18n="featuresSub">No databases to search, no portion sizes to remember. Just point and tap.</p>
     </div>
     <div class="feature-grid">
       <div class="feature">
         <div class="icon">📸</div>
-        <h3>AI photo analysis</h3>
-        <p>Take a picture and get calories, protein, carbs and fat in seconds. Three AI providers behind the scenes for reliability.</p>
+        <h3 data-i18n="f1Title">AI photo analysis</h3>
+        <p data-i18n="f1Body">Take a picture and get calories, protein, carbs and fat in seconds. Three AI providers behind the scenes for reliability.</p>
       </div>
       <div class="feature">
         <div class="icon">🔢</div>
-        <h3>Barcode scanner</h3>
-        <p>Scan packaged products and pull nutrition straight from Open Food Facts — including a product photo for your diary.</p>
+        <h3 data-i18n="f2Title">Barcode scanner</h3>
+        <p data-i18n="f2Body">Scan packaged products and pull nutrition straight from Open Food Facts — including a product photo for your diary.</p>
       </div>
       <div class="feature">
         <div class="icon">📊</div>
-        <h3>Daily goal tracking</h3>
-        <p>Set your calorie goal manually or use the built-in BMR calculator. Watch macros and progress on the home screen.</p>
+        <h3 data-i18n="f3Title">Daily goal tracking</h3>
+        <p data-i18n="f3Body">Set your calorie goal manually or use the built-in BMR calculator. Watch macros and progress on the home screen.</p>
       </div>
       <div class="feature">
         <div class="icon">📅</div>
-        <h3>Weekly history</h3>
-        <p>Browse your meal history, see weekly averages, and check days where you went over or under the target.</p>
+        <h3 data-i18n="f4Title">Weekly history</h3>
+        <p data-i18n="f4Body">Browse your meal history, see weekly averages, and check days where you went over or under the target.</p>
       </div>
       <div class="feature">
         <div class="icon">🔒</div>
-        <h3>Privacy by default</h3>
-        <p>Meals stay on your device. AI requests pass through our proxy without storing your photos. No accounts, no analytics.</p>
+        <h3 data-i18n="f5Title">Privacy by default</h3>
+        <p data-i18n="f5Body">Meals stay on your device. AI requests pass through our proxy without storing your photos. No accounts, no analytics.</p>
       </div>
       <div class="feature">
         <div class="icon">🌍</div>
-        <h3>7 languages</h3>
-        <p>English, Russian, Spanish, German, French, Brazilian Portuguese, Italian — auto-detected on first launch.</p>
+        <h3 data-i18n="f6Title">7 languages</h3>
+        <p data-i18n="f6Body">English, Russian, Spanish, German, French, Brazilian Portuguese, Italian — auto-detected on first launch.</p>
       </div>
     </div>
   </div>
@@ -320,11 +366,12 @@
 <section class="cta">
   <div class="container">
     <div class="cta-card">
-      <h2>Start eating smarter today</h2>
-      <p>Free to use. No account, no signup, no friction.</p>
+      <h2 data-i18n="ctaTitle">Start eating smarter today</h2>
+      <p data-i18n="ctaSub">Free to use. No account, no signup, no friction.</p>
       <div class="cta-row">
-        <a href="https://apps.apple.com/tr/app/food-energy/id6762185070" class="btn secondary" target="_blank" rel="noopener">App Store</a>
-        <a href="https://play.google.com/store/apps/details?id=com.kitchentech.calorie_ai_app" class="btn secondary" target="_blank" rel="noopener">Google Play</a>
+        <a href="https://apps.apple.com/tr/app/food-energy/id6762185070" class="btn secondary" target="_blank" rel="noopener" data-i18n="storeAppStore">App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=com.kitchentech.calorie_ai_app" class="btn secondary" target="_blank" rel="noopener" data-i18n="storeGooglePlay">Google Play</a>
+        <a href="/buy/" class="btn secondary" data-i18n="storePromoBig">Buy promo code</a>
       </div>
     </div>
   </div>
@@ -333,13 +380,121 @@
 <footer>
   <div class="container">
     <div class="links">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-      <a href="mailto:sergmochalin@gmail.com">Contact</a>
+      <a href="/privacy" data-i18n="footerPrivacy">Privacy Policy</a>
+      <a href="/terms" data-i18n="footerTerms">Terms of Service</a>
+      <a href="mailto:sergmochalin@gmail.com" data-i18n="footerContact">Contact</a>
     </div>
-    <div>© 2026 KitchenTech. All rights reserved.</div>
+    <div data-i18n="footerCopyright">© 2026 KitchenTech. All rights reserved.</div>
   </div>
 </footer>
+
+<script>
+const I18N = {
+  en: {
+    navFeatures: 'Features',
+    navPrivacy: 'Privacy',
+    navTerms: 'Terms',
+    heroTitle: 'Snap a meal.<br>Get the macros.',
+    heroSub: 'AI-powered calorie counter that turns a photo into calories, protein, carbs and fat in seconds. Scan barcodes for packaged products. Your data stays on your device.',
+    storeDownloadOn: 'Download on the',
+    storeAppStore: 'App Store',
+    storeGetItOn: 'Get it on',
+    storeGooglePlay: 'Google Play',
+    storePromoSmall: 'Or pay with card',
+    storePromoBig: 'Buy promo code',
+    featuresTitle: 'Track food without the friction',
+    featuresSub: 'No databases to search, no portion sizes to remember. Just point and tap.',
+    f1Title: 'AI photo analysis',
+    f1Body: 'Take a picture and get calories, protein, carbs and fat in seconds. Three AI providers behind the scenes for reliability.',
+    f2Title: 'Barcode scanner',
+    f2Body: 'Scan packaged products and pull nutrition straight from Open Food Facts — including a product photo for your diary.',
+    f3Title: 'Daily goal tracking',
+    f3Body: 'Set your calorie goal manually or use the built-in BMR calculator. Watch macros and progress on the home screen.',
+    f4Title: 'Weekly history',
+    f4Body: 'Browse your meal history, see weekly averages, and check days where you went over or under the target.',
+    f5Title: 'Privacy by default',
+    f5Body: 'Meals stay on your device. AI requests pass through our proxy without storing your photos. No accounts, no analytics.',
+    f6Title: '7 languages',
+    f6Body: 'English, Russian, Spanish, German, French, Brazilian Portuguese, Italian — auto-detected on first launch.',
+    ctaTitle: 'Start eating smarter today',
+    ctaSub: 'Free to use. No account, no signup, no friction.',
+    footerPrivacy: 'Privacy Policy',
+    footerTerms: 'Terms of Service',
+    footerContact: 'Contact',
+    footerCopyright: '© 2026 KitchenTech. All rights reserved.',
+    switchTo: 'EN',
+  },
+  ru: {
+    navFeatures: 'Возможности',
+    navPrivacy: 'Приватность',
+    navTerms: 'Условия',
+    heroTitle: 'Сфотографируй еду.<br>Узнай калории.',
+    heroSub: 'ИИ-счётчик калорий: фото превращается в калории, белки, жиры и углеводы за секунды. Сканер штрих-кодов для упакованных продуктов. Ваши данные остаются на устройстве.',
+    storeDownloadOn: 'Скачать в',
+    storeAppStore: 'App Store',
+    storeGetItOn: 'Доступно в',
+    storeGooglePlay: 'Google Play',
+    storePromoSmall: 'Или картой РФ',
+    storePromoBig: 'Купить промокод',
+    featuresTitle: 'Считай еду без напряга',
+    featuresSub: 'Никаких баз для поиска, никаких порций для запоминания. Просто наведи и тапни.',
+    f1Title: 'ИИ-анализ фото',
+    f1Body: 'Сделай снимок и получи калории, белки, жиры и углеводы за секунды. Три ИИ-провайдера для надёжности.',
+    f2Title: 'Сканер штрих-кодов',
+    f2Body: 'Сканируй упакованные продукты — данные о составе подтянутся из Open Food Facts, включая фото товара.',
+    f3Title: 'Дневная цель',
+    f3Body: 'Установи цель по калориям вручную или используй встроенный калькулятор BMR. Следи за макросами и прогрессом на главном экране.',
+    f4Title: 'Недельная история',
+    f4Body: 'Просматривай историю приёмов пищи, недельные средние и дни с превышением или недобором цели.',
+    f5Title: 'Приватность по умолчанию',
+    f5Body: 'Приёмы пищи остаются на устройстве. ИИ-запросы идут через наш прокси без сохранения фото. Без аккаунтов, без аналитики.',
+    f6Title: '7 языков',
+    f6Body: 'Английский, русский, испанский, немецкий, французский, бразильский португальский, итальянский — определяются автоматически.',
+    ctaTitle: 'Начни питаться умнее',
+    ctaSub: 'Бесплатно. Без аккаунта, без регистрации, без сложностей.',
+    footerPrivacy: 'Политика конфиденциальности',
+    footerTerms: 'Условия использования',
+    footerContact: 'Контакты',
+    footerCopyright: '© 2026 KitchenTech. Все права защищены.',
+    switchTo: 'RU',
+  },
+};
+
+function detectLang() {
+  const stored = localStorage.getItem('lang');
+  if (stored === 'en' || stored === 'ru') return stored;
+  const browser = (navigator.language || 'en').toLowerCase();
+  return browser.startsWith('ru') ? 'ru' : 'en';
+}
+
+function applyLang(lang) {
+  const T = I18N[lang];
+  document.documentElement.lang = lang;
+  document.title = lang === 'ru'
+    ? 'Food Energy — Сфотографируй еду, узнай калории.'
+    : 'Food Energy — Snap a meal, get the macros.';
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const key = el.getAttribute('data-i18n');
+    if (T[key]) el.textContent = T[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+    const key = el.getAttribute('data-i18n-html');
+    if (T[key]) el.innerHTML = T[key];
+  });
+  // Switch button shows the OTHER language (the one you'd switch to)
+  const other = lang === 'ru' ? 'en' : 'ru';
+  document.getElementById('langSwitch').textContent = other.toUpperCase();
+}
+
+let currentLang = detectLang();
+applyLang(currentLang);
+
+document.getElementById('langSwitch').addEventListener('click', () => {
+  currentLang = currentLang === 'ru' ? 'en' : 'ru';
+  localStorage.setItem('lang', currentLang);
+  applyLang(currentLang);
+});
+</script>
 
 </body>
 </html>

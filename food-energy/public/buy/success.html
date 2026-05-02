@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment received — Food Energy</title>
+<meta name="robots" content="noindex">
+<style>
+  :root {
+    --bg: #0E1410;
+    --bg-card: #1C2A22;
+    --fg: #F2F8F4;
+    --fg-sec: #93A39B;
+    --fg-muted: #62736A;
+    --accent: #34C759;
+    --border: rgba(255,255,255,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  body {
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(52,199,89,0.22), transparent 60%);
+    background-attachment: fixed;
+  }
+  a { color: var(--accent); }
+  .wrap {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 80px 20px 60px;
+    text-align: center;
+  }
+  .check {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #0E1410;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 44px; font-weight: 800;
+    margin: 0 auto 24px;
+  }
+  h1 { font-size: 26px; font-weight: 800; margin-bottom: 12px; }
+  p { color: var(--fg-sec); margin-bottom: 12px; font-size: 15px; }
+
+  .steps {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 22px;
+    margin: 28px 0;
+    text-align: left;
+  }
+  .steps h3 { font-size: 14px; font-weight: 700; color: var(--fg-sec); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .steps ol { padding-left: 22px; color: var(--fg); }
+  .steps li { padding: 4px 0; font-size: 14px; }
+  .steps li strong { color: var(--accent); }
+
+  .footer {
+    color: var(--fg-muted);
+    font-size: 12px;
+    margin-top: 32px;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="check">✓</div>
+
+<h1 data-i18n="title">Payment received</h1>
+<p data-i18n="lead">Your activation code is on its way. Check the email you provided — it usually arrives within a minute.</p>
+
+<div class="steps">
+  <h3 data-i18n="howTitle">How to activate</h3>
+  <ol>
+    <li data-i18n="s1">Open the <strong>Food Energy</strong> app on your phone</li>
+    <li data-i18n="s2">Tap <strong>Upgrade to Pro</strong></li>
+    <li data-i18n="s3">Tap <strong>Have a code?</strong> at the bottom</li>
+    <li data-i18n="s4">Enter the code from the email</li>
+  </ol>
+</div>
+
+<p data-i18n="checkSpam">No email after a few minutes? Check your spam folder.</p>
+
+<div class="footer" data-i18n-html="footer">
+  Issues? <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a>
+</div>
+
+</div>
+
+<script>
+const I18N = {
+  en: {
+    title: 'Payment received',
+    lead: 'Your activation code is on its way. Check the email you provided — it usually arrives within a minute.',
+    howTitle: 'How to activate',
+    s1: 'Open the <strong>Food Energy</strong> app on your phone',
+    s2: 'Tap <strong>Upgrade to Pro</strong>',
+    s3: 'Tap <strong>Have a code?</strong> at the bottom',
+    s4: 'Enter the code from the email',
+    checkSpam: 'No email after a few minutes? Check your spam folder.',
+    footer: 'Issues? <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a>',
+  },
+  ru: {
+    title: 'Оплата получена',
+    lead: 'Код активации уже в пути. Проверьте указанный email — обычно письмо приходит в течение минуты.',
+    howTitle: 'Как активировать',
+    s1: 'Откройте приложение <strong>Food Energy</strong> на телефоне',
+    s2: 'Нажмите <strong>Перейти на Pro</strong>',
+    s3: 'Нажмите <strong>Есть промокод?</strong> внизу экрана',
+    s4: 'Введите код из письма',
+    checkSpam: 'Если письмо не пришло за несколько минут — проверьте папку «Спам».',
+    footer: 'Проблемы? <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a>',
+  },
+};
+function detectLang() {
+  try {
+    const s = localStorage.getItem('lang');
+    if (s === 'en' || s === 'ru') return s;
+  } catch (_) {}
+  return (navigator.language || 'en').toLowerCase().startsWith('ru') ? 'ru' : 'en';
+}
+const lang = detectLang();
+const T = I18N[lang];
+document.documentElement.lang = lang;
+document.querySelectorAll('[data-i18n]').forEach((el) => {
+  if (T[el.dataset.i18n]) el.innerHTML = T[el.dataset.i18n];
+});
+document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+  if (T[el.dataset.i18nHtml]) el.innerHTML = T[el.dataset.i18nHtml];
+});
+</script>
+
+</body>
+</html>

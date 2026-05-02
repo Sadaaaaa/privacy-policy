@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Energy Pro — Subscribe</title>
+<meta name="robots" content="noindex">
+<style>
+  :root {
+    --bg: #0E1410;
+    --bg-elev: #16201A;
+    --bg-card: #1C2A22;
+    --fg: #F2F8F4;
+    --fg-sec: #93A39B;
+    --fg-muted: #62736A;
+    --accent: #34C759;
+    --accent-2: #4CAF6E;
+    --border: rgba(255,255,255,0.08);
+    --error: #FF6B6B;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  body {
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(52,199,89,0.18), transparent 50%),
+      radial-gradient(circle at 85% 10%, rgba(76,175,110,0.12), transparent 50%);
+    background-attachment: fixed;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .brand img {
+    width: 48px; height: 48px; border-radius: 12px;
+  }
+  .brand-text { font-weight: 700; font-size: 17px; }
+  .brand-sub { font-size: 12px; color: var(--fg-muted); }
+
+  h1 { font-size: 26px; font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
+  .lead { color: var(--fg-sec); font-size: 15px; margin-bottom: 28px; }
+
+  .features {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin-bottom: 28px;
+  }
+  .features li {
+    list-style: none;
+    padding: 6px 0;
+    color: var(--fg-sec);
+    font-size: 14px;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .features li::before {
+    content: "✓";
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    width: 18px;
+  }
+
+  .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+  .plan {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .plan:hover { border-color: var(--accent-2); }
+  .plan.selected { border-color: var(--accent); background: rgba(52,199,89,0.08); }
+  .plan-name { font-size: 13px; color: var(--fg-sec); font-weight: 600; }
+  .plan-price { font-size: 22px; font-weight: 800; margin-top: 4px; }
+  .plan-period { font-size: 12px; color: var(--fg-muted); }
+  .plan-badge {
+    position: absolute;
+    top: -8px; right: 12px;
+    background: var(--accent);
+    color: #0E1410;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.4px;
+  }
+
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block;
+    font-size: 13px;
+    color: var(--fg-sec);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .field input[type=email] {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: var(--fg);
+    font-size: 16px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .field input[type=email]:focus {
+    border-color: var(--accent);
+  }
+  .field-hint { font-size: 12px; color: var(--fg-muted); margin-top: 6px; }
+
+  .terms {
+    font-size: 12px;
+    color: var(--fg-muted);
+    margin: 16px 0 16px;
+    line-height: 1.6;
+  }
+
+  .consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0 0 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .consent input[type=checkbox] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    border: 1.5px solid var(--fg-muted);
+    border-radius: 5px;
+    background: var(--bg-card);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.15s;
+  }
+  .consent input[type=checkbox]:hover {
+    border-color: var(--accent);
+  }
+  .consent input[type=checkbox]:checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .consent input[type=checkbox]:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px; top: 2px;
+    width: 5px; height: 10px;
+    border: solid #0E1410;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .consent .label {
+    font-size: 12px;
+    color: var(--fg-sec);
+    line-height: 1.55;
+  }
+  .consent a {
+    color: var(--accent);
+  }
+
+  .pay-btn {
+    width: 100%;
+    background: var(--accent);
+    color: #0E1410;
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.15s;
+  }
+  .pay-btn:hover { opacity: 0.9; }
+  .pay-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .error {
+    background: rgba(255,107,107,0.1);
+    border: 1px solid rgba(255,107,107,0.3);
+    color: var(--error);
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    display: none;
+  }
+  .error.show { display: block; }
+
+  .footer-note {
+    text-align: center;
+    color: var(--fg-muted);
+    font-size: 12px;
+    margin-top: 32px;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 24px 16px 60px; }
+    h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="brand">
+  <img src="/icon.png" alt="">
+  <div>
+    <div class="brand-text" data-i18n="brand">Food Energy</div>
+    <div class="brand-sub" data-i18n="sub">AI calorie counter</div>
+  </div>
+</div>
+
+<h1 data-i18n="title">Upgrade to Pro</h1>
+<p class="lead" data-i18n="lead">For users who can't subscribe through the App Store or Google Play. Pay by card or SBP, get an activation code by email.</p>
+
+<ul class="features">
+  <li data-i18n="f1">Unlimited food scans</li>
+  <li data-i18n="f2">Advanced AI analysis with detailed micronutrients</li>
+  <li data-i18n="f3">Premium AI model option for higher accuracy</li>
+  <li data-i18n="f4">Weekly PDF export</li>
+</ul>
+
+<div class="plans">
+  <div class="plan selected" data-plan="monthly">
+    <div class="plan-name" data-i18n="planMonthly">Monthly</div>
+    <div class="plan-price">299 ₽</div>
+    <div class="plan-period" data-i18n="planMonthlyPer">per month</div>
+  </div>
+  <div class="plan" data-plan="yearly">
+    <span class="plan-badge" data-i18n="planSave">SAVE 16%</span>
+    <div class="plan-name" data-i18n="planYearly">Yearly</div>
+    <div class="plan-price">2 999 ₽</div>
+    <div class="plan-period" data-i18n="planYearlyPer">per year</div>
+  </div>
+</div>
+
+<div class="field">
+  <label for="email" data-i18n="emailLabel">Email for the activation code</label>
+  <input type="email" id="email" required autocomplete="email" placeholder="you@example.com">
+  <div class="field-hint" data-i18n="emailHint">We'll send the code here. One-time use.</div>
+</div>
+
+<div class="terms" data-i18n-html="terms">
+  By subscribing you agree to our <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>. Subscription does not auto-renew — purchase a new code when it expires.
+</div>
+
+<label class="consent">
+  <input type="checkbox" id="consent">
+  <span class="label" data-i18n-html="consent">
+    I agree that my email may be stored in <a href="/privacy">Google Cloud Firestore</a> to deliver the activation code, and automatically deleted after 90 days.
+  </span>
+</label>
+
+<div class="error" id="error"></div>
+
+<button class="pay-btn" id="payBtn" data-i18n="pay" disabled>Pay 199 ₽</button>
+
+<div class="footer-note" data-i18n-html="footer">
+  Powered by Tinkoff Acquiring (T-Bank). Supports cards, SBP, T-Pay.<br>
+  Issues? <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a>
+</div>
+
+</div>
+
+<script>
+const I18N = {
+  en: {
+    brand: 'Food Energy',
+    sub: 'AI calorie counter',
+    title: 'Upgrade to Pro',
+    lead: "For users who can't subscribe through the App Store or Google Play. Pay by card or SBP, get an activation code by email.",
+    f1: 'Unlimited food scans',
+    f2: 'Advanced AI analysis with detailed micronutrients',
+    f3: 'Premium AI model option for higher accuracy',
+    f4: 'Weekly PDF export',
+    planMonthly: 'Monthly',
+    planMonthlyPer: 'per month',
+    planYearly: 'Yearly',
+    planYearlyPer: 'per year',
+    planSave: 'SAVE 16%',
+    emailLabel: 'Email for the activation code',
+    emailHint: "We'll send the code here. One-time use.",
+    terms: 'By subscribing you agree to our <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>. Subscription does not auto-renew — purchase a new code when it expires.',
+    consent: 'I agree that my email address will be stored on our servers (Google Cloud Firestore) for the sole purpose of delivering the activation code, and automatically deleted after 90 days. Details in the <a href="/privacy">Privacy Policy</a>.',
+    footer: 'Powered by Tinkoff Acquiring (T-Bank). Supports cards, SBP, T-Pay.<br>Issues? <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a>',
+    payMonthly: 'Pay 299 ₽',
+    payYearly: 'Pay 2 999 ₽',
+    errInvalidEmail: 'Please enter a valid email address.',
+    errConsentRequired: 'Please confirm you agree to the email storage terms.',
+    errNetwork: 'Connection error. Please try again.',
+    errGeneric: 'Something went wrong. Please try again.',
+  },
+  ru: {
+    brand: 'Food Energy',
+    sub: 'ИИ-счётчик калорий',
+    title: 'Подписка Pro',
+    lead: 'Для пользователей, которые не могут оформить подписку через App Store или Google Play. Оплата картой или СБП, код активации придёт на email.',
+    f1: 'Безлимитное сканирование еды',
+    f2: 'Расширенный ИИ-анализ с детальными микронутриентами',
+    f3: 'Опция премиальной ИИ-модели для большей точности',
+    f4: 'Экспорт недели в PDF',
+    planMonthly: 'Месяц',
+    planMonthlyPer: 'в месяц',
+    planYearly: 'Год',
+    planYearlyPer: 'в год',
+    planSave: 'ВЫГОДНО 16%',
+    emailLabel: 'Email для кода активации',
+    emailHint: 'На этот адрес придёт код. Используется один раз.',
+    terms: 'Оформляя подписку, вы соглашаетесь с <a href="/terms">офертой</a> и <a href="/privacy">политикой конфиденциальности</a>. Подписка не продлевается автоматически — для продления нужен новый код.',
+    consent: 'Я согласен(на), что мой email будет храниться на наших серверах (Google Cloud Firestore) исключительно для доставки кода активации и автоматически удалится через 90 дней. Подробности в <a href="/privacy">политике конфиденциальности</a>.',
+    footer: 'Платежи через Tinkoff Acquiring (Т-Банк). Карты, СБП, T-Pay.<br>Проблемы? <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a>',
+    payMonthly: 'Оплатить 299 ₽',
+    payYearly: 'Оплатить 2 999 ₽',
+    errInvalidEmail: 'Введите корректный email.',
+    errConsentRequired: 'Подтвердите согласие на хранение email.',
+    errNetwork: 'Ошибка соединения. Попробуйте ещё раз.',
+    errGeneric: 'Что-то пошло не так. Попробуйте ещё раз.',
+  },
+};
+
+// Honor the user's choice from the marketing landing (localStorage 'lang'),
+// fall back to browser locale.
+function detectLang() {
+  try {
+    const stored = localStorage.getItem('lang');
+    if (stored === 'en' || stored === 'ru') return stored;
+  } catch (_) {}
+  return (navigator.language || 'en').toLowerCase().startsWith('ru') ? 'ru' : 'en';
+}
+const lang = detectLang();
+const T = I18N[lang];
+
+document.documentElement.lang = lang;
+
+document.querySelectorAll('[data-i18n]').forEach((el) => {
+  const key = el.getAttribute('data-i18n');
+  if (T[key]) el.textContent = T[key];
+});
+document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+  const key = el.getAttribute('data-i18n-html');
+  if (T[key]) el.innerHTML = T[key];
+});
+
+let selectedPlan = 'monthly';
+const planEls = document.querySelectorAll('.plan');
+const payBtn = document.getElementById('payBtn');
+const emailInput = document.getElementById('email');
+const consentInput = document.getElementById('consent');
+const errorEl = document.getElementById('error');
+
+function isPayable() {
+  const email = emailInput.value.trim();
+  const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+  return emailOk && consentInput.checked;
+}
+
+function updatePayButton() {
+  payBtn.textContent = selectedPlan === 'yearly' ? T.payYearly : T.payMonthly;
+  payBtn.disabled = !isPayable();
+}
+updatePayButton();
+
+emailInput.addEventListener('input', updatePayButton);
+consentInput.addEventListener('change', updatePayButton);
+
+planEls.forEach((el) => {
+  el.addEventListener('click', () => {
+    selectedPlan = el.dataset.plan;
+    planEls.forEach((p) => p.classList.toggle('selected', p === el));
+    updatePayButton();
+  });
+});
+
+function showError(msg) {
+  errorEl.textContent = msg;
+  errorEl.classList.add('show');
+}
+function clearError() {
+  errorEl.classList.remove('show');
+}
+
+payBtn.addEventListener('click', async () => {
+  clearError();
+  const email = emailInput.value.trim();
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    showError(T.errInvalidEmail);
+    emailInput.focus();
+    return;
+  }
+  if (!consentInput.checked) {
+    showError(T.errConsentRequired);
+    return;
+  }
+  payBtn.disabled = true;
+  const originalText = payBtn.textContent;
+  payBtn.textContent = '...';
+  try {
+    const response = await fetch('https://food.kitchentech.work/v1/payments/tinkoff-init', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, plan: selectedPlan }),
+    });
+    if (!response.ok) {
+      const data = await response.json().catch(() => ({}));
+      throw new Error(data?.error?.message || 'http_' + response.status);
+    }
+    const data = await response.json();
+    if (!data.paymentUrl) throw new Error('no_payment_url');
+    window.location.href = data.paymentUrl;
+  } catch (err) {
+    payBtn.textContent = originalText;
+    updatePayButton(); // restore disabled state based on current validation
+    if (err.name === 'TypeError') showError(T.errNetwork);
+    else showError(T.errGeneric);
+  }
+});
+</script>
+
+</body>
+</html>
