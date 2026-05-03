@@ -1,0 +1,691 @@
+/* Enhanced mock screens — drawn in HTML/CSS at 1320x2868 then scaled */
+
+.mock {
+  position: relative;
+  width: 1320px;
+  height: 2868px;
+  background: #f5f4ee;
+  font-family: 'Inter Tight', -apple-system, sans-serif;
+  color: #0c1828;
+  overflow: hidden;
+  transform-origin: top left;
+}
+/* Status bar */
+.mock .statusbar {
+  position: relative;
+  height: 130px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 90px 22px;
+  font-size: 46px;
+  font-weight: 600;
+  color: #0c1828;
+}
+.mock .statusbar .right {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.mock .statusbar .right svg { width: 60px; height: 36px; }
+.mock .dynamic-island {
+  position: absolute;
+  top: 38px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 330px;
+  height: 100px;
+  background: #000;
+  border-radius: 50px;
+}
+/* Tab bar */
+.mock .tabbar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 230px;
+  background: rgba(247, 246, 242, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0,0,0,0.06);
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding-top: 26px;
+}
+.mock .tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #9ca3af;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.mock .tab.active { color: #16a34a; }
+.mock .tab .tab-icon {
+  width: 64px; height: 64px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ========== HOME (rich) ========== */
+.mock-home .title {
+  font-size: 80px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  padding: 30px 80px 0;
+  line-height: 1;
+}
+.mock-home .summary {
+  margin: 50px 70px 0;
+  background: #fff;
+  border-radius: 50px;
+  padding: 56px 60px;
+  box-shadow: 0 4px 12px rgba(15,30,50,0.04);
+}
+.mock-home .kcal-row {
+  display: flex; align-items: baseline; gap: 24px;
+}
+.mock-home .kcal-num {
+  font-size: 110px; font-weight: 800; letter-spacing: -0.04em; line-height: 1;
+}
+.mock-home .kcal-of {
+  font-size: 44px; color: #6b7280; font-weight: 500;
+}
+.mock-home .progress {
+  margin-top: 36px;
+  height: 28px;
+  background: #e5e7eb;
+  border-radius: 100px;
+  overflow: hidden;
+  position: relative;
+}
+.mock-home .progress .fill {
+  height: 100%;
+  width: 64%;
+  background: linear-gradient(90deg, #16a34a, #4ade80 70%, #7c3aed);
+  border-radius: 100px;
+}
+.mock-home .remaining {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 32px;
+  color: #6b7280;
+}
+.mock-home .macros {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  margin: 30px 70px 0;
+}
+.mock-home .macro {
+  background: #fff;
+  border-radius: 36px;
+  padding: 36px 36px 30px;
+  box-shadow: 0 4px 12px rgba(15,30,50,0.04);
+  position: relative;
+  overflow: hidden;
+}
+.mock-home .macro .v {
+  font-size: 70px; font-weight: 800; letter-spacing: -0.03em; line-height: 1;
+}
+.mock-home .macro .of {
+  margin-top: 8px; font-size: 28px; color: #9ca3af; font-weight: 500;
+}
+.mock-home .macro .name {
+  margin-top: 14px; font-size: 32px; font-weight: 600; color: #4b5563;
+}
+.mock-home .macro .bar {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 8px; background: #e5e7eb;
+}
+.mock-home .macro .bar::after {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 0;
+  width: var(--p, 50%); border-radius: 100px;
+}
+.mock-home .m-protein { color: #ef4444; }
+.mock-home .m-protein .bar::after { background: #ef4444; }
+.mock-home .m-carbs { color: #f59e0b; }
+.mock-home .m-carbs .bar::after { background: #f59e0b; }
+.mock-home .m-fat { color: #7c3aed; }
+.mock-home .m-fat .bar::after { background: #7c3aed; }
+
+.mock-home .actions {
+  display: flex; gap: 24px; margin: 36px 70px 0;
+}
+.mock-home .btn {
+  flex: 1;
+  height: 130px;
+  border-radius: 36px;
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  font-size: 38px; font-weight: 700;
+}
+.mock-home .btn.primary {
+  background: linear-gradient(180deg, #16a34a, #15803d);
+  color: white;
+  box-shadow: 0 8px 24px rgba(22,163,74,0.3);
+}
+.mock-home .btn.secondary {
+  background: white;
+  color: #0c1828;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.mock-home .meals-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 60px 80px 0;
+}
+.mock-home .meals-title {
+  font-size: 60px; font-weight: 800; letter-spacing: -0.03em;
+}
+.mock-home .meals-count {
+  font-size: 32px; color: #6b7280; font-weight: 500;
+}
+
+.mock-home .meal-section {
+  margin: 32px 70px 0;
+}
+.mock-home .meal-label {
+  font-size: 32px; font-weight: 700; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 16px;
+}
+.mock-home .meal-card {
+  background: white; border-radius: 36px; padding: 24px 30px;
+  display: flex; align-items: center; gap: 30px;
+  box-shadow: 0 4px 12px rgba(15,30,50,0.04);
+  margin-bottom: 18px;
+}
+.mock-home .meal-thumb {
+  width: 132px; height: 132px; border-radius: 24px;
+  background-color: #f3f4f6;
+  flex-shrink: 0;
+  background-size: cover; background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+.mock-home .meal-thumb img,
+.mock-history .h-thumb img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.mock-home .meal-info { flex: 1; }
+.mock-home .meal-name {
+  font-size: 38px; font-weight: 700; letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.mock-home .meal-time {
+  font-size: 26px; color: #9ca3af; margin-top: 6px; font-weight: 500;
+}
+.mock-home .meal-kcal-wrap {
+  text-align: right;
+}
+.mock-home .meal-kcal {
+  font-size: 38px; font-weight: 800; color: #16a34a;
+}
+.mock-home .meal-grams {
+  font-size: 26px; color: #9ca3af; margin-top: 6px; font-weight: 500;
+}
+
+/* food fake imagery via gradients — use !important so they win over scoped meal-thumb */
+.food-grapes {
+  background: radial-gradient(circle at 30% 30%, #84cc16, #4d7c0f 60%, #365314) !important;
+}
+.food-grapes::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 25% 30%, #a3e635 8%, transparent 9%),
+    radial-gradient(circle at 50% 25%, #84cc16 7%, transparent 8%),
+    radial-gradient(circle at 70% 35%, #65a30d 8%, transparent 9%),
+    radial-gradient(circle at 35% 60%, #84cc16 7%, transparent 8%),
+    radial-gradient(circle at 60% 65%, #a3e635 8%, transparent 9%);
+}
+.food-eggs {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%) !important;
+}
+.food-eggs::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 35% 50%, #fbbf24 14%, transparent 15%),
+    radial-gradient(circle at 65% 50%, #f59e0b 14%, transparent 15%),
+    radial-gradient(circle at 35% 50%, #fde68a 18%, transparent 19%),
+    radial-gradient(circle at 65% 50%, #fde68a 18%, transparent 19%);
+}
+.food-salmon {
+  background: linear-gradient(135deg, #fdba74, #f97316 70%, #c2410c) !important;
+}
+.food-salmon::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(105deg, rgba(255,255,255,0.18) 0 6px, transparent 6px 14px),
+    radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.2), transparent 60%);
+}
+.food-toast {
+  background: linear-gradient(135deg, #fed7aa, #d97706 80%) !important;
+}
+.food-toast::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 30% 35%, #84cc16 10%, transparent 11%),
+    radial-gradient(circle at 60% 50%, #4d7c0f 8%, transparent 9%),
+    radial-gradient(circle at 45% 65%, #15803d 9%, transparent 10%);
+}
+.food-coffee {
+  background: radial-gradient(circle at 50% 50%, #78350f, #451a03) !important;
+}
+.food-coffee::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 35%, #292524 36%, #292524 100%);
+  border-radius: 50%;
+  margin: 12px;
+}
+.food-salad {
+  background: linear-gradient(135deg, #84cc16, #15803d 70%) !important;
+}
+.food-salad::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 25% 40%, #ef4444 8%, transparent 9%),
+    radial-gradient(circle at 70% 30%, #fbbf24 7%, transparent 8%),
+    radial-gradient(circle at 60% 70%, #fef3c7 6%, transparent 7%),
+    radial-gradient(circle at 35% 75%, #f97316 6%, transparent 7%);
+}
+.food-banana {
+  background: linear-gradient(135deg, #fde047, #ca8a04 80%) !important;
+}
+.food-yogurt {
+  background: linear-gradient(135deg, #faf5ff, #ddd6fe 70%, #a78bfa) !important;
+}
+.food-yogurt::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 35% 35%, #f87171 10%, transparent 11%),
+    radial-gradient(circle at 60% 55%, #fbbf24 8%, transparent 9%),
+    radial-gradient(circle at 45% 70%, #a78bfa 7%, transparent 8%);
+}
+.food-rice {
+  background: linear-gradient(135deg, #fef3c7, #fde68a 70%) !important;
+}
+.food-rice::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    repeating-radial-gradient(circle at 30% 30%, white 0 4px, transparent 4px 9px),
+    repeating-radial-gradient(circle at 70% 60%, white 0 3px, transparent 3px 8px);
+}
+
+/* ========== HISTORY (rich) ========== */
+.mock-history .h-title {
+  font-size: 80px; font-weight: 800; letter-spacing: -0.03em;
+  padding: 30px 80px 0; line-height: 1;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.mock-history .week-pill {
+  font-size: 30px; font-weight: 600; color: #15803d;
+  background: #d1fadf; padding: 18px 30px; border-radius: 100px;
+  display: flex; align-items: center; gap: 14px;
+}
+.mock-history .chart-card {
+  margin: 50px 70px 0;
+  background: white; border-radius: 50px; padding: 50px;
+  box-shadow: 0 4px 12px rgba(15,30,50,0.04);
+}
+.mock-history .chart-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.mock-history .chart-title { font-size: 44px; font-weight: 800; letter-spacing: -0.02em; }
+.mock-history .chart-avg { font-size: 30px; color: #6b7280; font-weight: 500; }
+.mock-history .chart-bars {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 20px;
+  height: 360px;
+  align-items: end;
+  margin: 50px 0 30px;
+}
+.mock-history .bar-col {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  height: 100%;
+  justify-content: flex-end;
+}
+.mock-history .bar {
+  width: 100%; max-width: 80px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #a78bfa, #7c3aed);
+  position: relative;
+  flex-shrink: 0;
+}
+.mock-history .bar.green { background: linear-gradient(180deg, #4ade80, #16a34a); }
+.mock-history .bar.over { background: linear-gradient(180deg, #fb923c, #ea580c); }
+.mock-history .bar.muted { background: #e5e7eb; height: 24px !important; }
+.mock-history .bar.today {
+  background: linear-gradient(180deg, #a78bfa, #7c3aed);
+  box-shadow: 0 0 0 6px rgba(124,58,237,0.18);
+}
+.mock-history .bar-label { font-size: 26px; color: #9ca3af; font-weight: 500; }
+.mock-history .bar-label.active { color: #7c3aed; font-weight: 700; }
+.mock-history .legend {
+  display: flex; gap: 36px; margin-top: 20px;
+  font-size: 26px; color: #6b7280; font-weight: 500;
+}
+.mock-history .legend-item {
+  display: flex; align-items: center; gap: 12px;
+}
+.mock-history .legend-dot {
+  width: 20px; height: 20px; border-radius: 50%;
+}
+
+.mock-history .stats {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
+  margin: 32px 70px 0;
+}
+.mock-history .stat {
+  background: white; border-radius: 36px; padding: 36px;
+  box-shadow: 0 4px 12px rgba(15,30,50,0.04);
+}
+.mock-history .stat .v { font-size: 70px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+.mock-history .stat .l { margin-top: 14px; font-size: 26px; color: #9ca3af; font-weight: 500; line-height: 1.2; }
+
+.mock-history .recent-title {
+  font-size: 60px; font-weight: 800; letter-spacing: -0.03em;
+  padding: 60px 80px 0;
+}
+.mock-history .day-row {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 14px;
+  padding: 30px 70px 0;
+}
+.mock-history .day {
+  text-align: center;
+  padding: 30px 0;
+  border-radius: 32px;
+  border: 2px solid transparent;
+  background: white;
+}
+.mock-history .day.active {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 4px rgba(22,163,74,0.15);
+}
+.mock-history .day-name { font-size: 26px; color: #9ca3af; font-weight: 600; }
+.mock-history .day-num { font-size: 50px; font-weight: 800; margin-top: 8px; letter-spacing: -0.03em; }
+.mock-history .day .dot { width: 12px; height: 12px; border-radius: 50%; background: #16a34a; margin: 12px auto 0; }
+
+.mock-history .h-meal {
+  margin: 22px 70px 0;
+  background: white; border-radius: 36px; padding: 28px 32px;
+  display: flex; align-items: center; gap: 28px;
+  box-shadow: 0 4px 12px rgba(15,30,50,0.04);
+}
+.mock-history .h-meal .h-thumb {
+  width: 110px; height: 110px; border-radius: 22px;
+  position: relative; overflow: hidden; flex-shrink: 0;
+}
+.mock-history .h-meal-info { flex: 1; }
+.mock-history .h-meal-name { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; }
+.mock-history .h-meal-macros { margin-top: 8px; font-size: 24px; color: #9ca3af; }
+.mock-history .h-meal-macros span { margin-right: 18px; font-weight: 600; }
+.mock-history .h-meal-macros .p { color: #ef4444; }
+.mock-history .h-meal-macros .c { color: #f59e0b; }
+.mock-history .h-meal-macros .f { color: #7c3aed; }
+.mock-history .h-meal-kcal { font-size: 36px; font-weight: 800; color: #16a34a; }
+.mock-history .h-meal-grams { font-size: 24px; color: #9ca3af; margin-top: 4px; text-align: right; }
+.mock-history .h-summary {
+  margin: 36px 70px 0;
+  background: white; border-radius: 28px; padding: 22px 30px;
+  display: flex; align-items: center; gap: 20px;
+  border: 1px solid #d1fadf;
+  box-shadow: 0 4px 12px rgba(15,30,50,0.04);
+}
+.mock-history .h-summary .check {
+  width: 44px; height: 44px; border-radius: 50%; background: #16a34a;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 28px; font-weight: 800;
+}
+.mock-history .h-summary .text {
+  flex: 1; font-size: 30px; font-weight: 600;
+}
+.mock-history .h-summary .ontrack { font-size: 28px; color: #16a34a; font-weight: 600; }
+
+/* ========== SCAN (rich) — overlay with detection box ========== */
+.mock-scan {
+  background: #1a1f3a;
+  position: relative;
+}
+.mock-scan .s-title {
+  font-size: 50px; font-weight: 800; color: white;
+  padding: 80px 60px 0; display: flex; justify-content: space-between; align-items: center;
+  white-space: nowrap;
+}
+.mock-scan .pills {
+  display: flex; gap: 16px;
+}
+.mock-scan .pill {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(20px);
+  border-radius: 28px;
+  padding: 18px 30px;
+  display: flex; align-items: center; gap: 14px;
+  font-size: 32px; font-weight: 700; color: white;
+}
+.mock-scan .pill.active {
+  background: rgba(255,255,255,0.95); color: #0c1828;
+}
+.mock-scan .scan-stage {
+  position: absolute;
+  top: 320px; bottom: 480px; left: 0; right: 0;
+  background:
+    linear-gradient(135deg, #1a1f3a 0%, #0c1828 100%);
+  overflow: hidden;
+}
+.mock-scan .scan-stage::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(74,222,128,0.12), transparent 60%);
+  opacity: 1;
+}
+/* Plate of food fills viewfinder */
+.mock-scan .plate {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.mock-scan .plate img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Subtle vignette over photo */
+.mock-scan .plate::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.45) 100%);
+  pointer-events: none;
+}
+/* Detection box overlay — floats over photo */
+.mock-scan .detect-box {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 820px; height: 820px;
+  border: 5px solid #4ade80;
+  border-radius: 40px;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.25), 0 0 60px rgba(74, 222, 128, 0.4);
+}
+.mock-scan .detect-box::before, .mock-scan .detect-box::after,
+.mock-scan .detect-corners::before, .mock-scan .detect-corners::after {
+  content: '';
+  position: absolute;
+  width: 60px; height: 60px;
+  border: 12px solid #4ade80;
+}
+.mock-scan .detect-box::before { top: -6px; left: -6px; border-right: 0; border-bottom: 0; border-radius: 40px 0 0 0; }
+.mock-scan .detect-box::after { top: -6px; right: -6px; border-left: 0; border-bottom: 0; border-radius: 0 40px 0 0; }
+.mock-scan .detect-corners { position: absolute; inset: 0; }
+.mock-scan .detect-corners::before { bottom: -6px; left: -6px; border-right: 0; border-top: 0; border-radius: 0 0 0 40px; }
+.mock-scan .detect-corners::after { bottom: -6px; right: -6px; border-left: 0; border-top: 0; border-radius: 0 0 40px 0; }
+.mock-scan .detect-label {
+  position: absolute;
+  top: -90px; left: 0;
+  background: #4ade80;
+  color: #0c1828;
+  padding: 16px 28px;
+  border-radius: 16px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  white-space: nowrap;
+}
+.mock-scan .detect-label .conf {
+  background: rgba(0,0,0,0.15);
+  padding: 4px 14px;
+  border-radius: 8px;
+  font-size: 24px;
+}
+
+/* AI badge floating */
+.mock-scan .ai-toast {
+  position: absolute;
+  top: 1500px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 100px;
+  padding: 22px 40px;
+  color: white;
+  font-size: 32px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  z-index: 10;
+  white-space: nowrap;
+}
+.mock-scan .ai-toast .spin {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 4px solid rgba(255,255,255,0.2);
+  border-top-color: #4ade80;
+}
+
+/* Bottom controls */
+.mock-scan .controls {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 480px;
+  background: rgba(20, 25, 45, 0.85);
+  backdrop-filter: blur(30px);
+  border-radius: 60px 60px 0 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 80px 60px;
+}
+.mock-scan .controls::before {
+  content: '';
+  position: absolute;
+  top: 30px;
+  left: 50%; transform: translateX(-50%);
+  width: 100px; height: 8px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.3);
+}
+.mock-scan .ctrl {
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+.mock-scan .ctrl-icon {
+  width: 130px; height: 130px;
+  border-radius: 36px;
+  background: rgba(255,255,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-size: 60px;
+  font-weight: 800;
+}
+.mock-scan .ctrl-label {
+  font-size: 30px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+}
+.mock-scan .shutter {
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  border: 8px solid #4ade80;
+  background: white;
+  position: relative;
+}
+.mock-scan .shutter::before {
+  content: '';
+  position: absolute; inset: 14px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 30px rgba(74, 222, 128, 0.5);
+}
+
+/* ========== PROFILE (rich) ========== */
+.mock-profile { background: #f5f4ee; }
+.mock-profile .p-name {
+  font-size: 80px; font-weight: 800; letter-spacing: -0.03em;
+  padding: 30px 80px 0;
+  display: flex; align-items: center; gap: 24px;
+}
+.mock-profile .p-name svg { width: 50px; height: 50px; }
+.mock-profile .section-label {
+  font-size: 30px; font-weight: 700; letter-spacing: 0.15em; color: #9ca3af;
+  text-transform: uppercase;
+  padding: 70px 80px 24px;
+}
+.mock-profile .goal-card {
+  margin: 0 70px;
+  background: white; border-radius: 36px; padding: 36px 40px;
+  display: flex; align-items: center; gap: 30px;
+  box-shadow: 0 4px 12px rgba(15,30,50,0.04);
+}
+.mock-profile .goal-icon {
+  width: 100px; height: 100px; border-radius: 24px;
+  background: linear-gradient(135deg, #818cf8, #6366f1);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 800; font-size: 32px;
+}
+.mock-profile .goal-info { flex: 1; }
+.mock-profile .goal-name { font-size: 38px; font-weight: 700; }
+.mock-profile .goal-val { font-size: 38px; font-weight: 800; color: #0c1828; letter-spacing: -0.02em; }
+.mock-profile .pro-banner {
+  margin: 24px 70px 0;
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  border-radius: 36px; padding: 36px 40px;
+  color: white;
+  display: flex; align-items: center; gap: 24px;
+  box-shadow: 0 8px 24px rgba(22,163,74,0.25);
+}
+.mock-profile .pro-banner .rocket {
+  width: 80px; height: 80px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 24px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 50px;
+}
+.mock-profile .pro-info { flex: 1; }
+.mock-profile .pro-name { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; }
+.mock-profile .pro-price { font-size: 28px; opacity: 0.85; margin-top: 6px; }
+.mock-profile .setting-card {
+  margin: 0 70px;
+  background: white; border-radius: 36px; padding: 16px 0;
+  box-shadow: 0 4px 12px rgba(15,30,50,0.04);
+}
+.mock-profile .setting-row {
+  display: flex; align-items: center; gap: 28px;
+  padding: 26px 36px;
+  border-bottom: 1px solid #f3f4f6;
+}
+.mock-profile .setting-row:last-child { border-bottom: 0; }
+.mock-profile .setting-icon {
+  width: 80px; height: 80px; border-radius: 24px;
+  background: #f3f4f6;
+  display: flex; align-items: center; justify-content: center;
+  color: #4b5563;
+}
+.mock-profile .setting-icon svg { width: 44px; height: 44px; }
+.mock-profile .setting-name { flex: 1; font-size: 36px; font-weight: 600; letter-spacing: -0.01em; }
+.mock-profile .setting-val { font-size: 28px; color: #6b7280; font-weight: 500; display: flex; align-items: center; gap: 12px; white-space: nowrap; }
+

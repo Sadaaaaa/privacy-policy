@@ -8,6 +8,10 @@
 <meta property="og:title" content="Food Energy — AI calorie counter">
 <meta property="og:description" content="Snap a meal, get instant calories and macros. Barcode scanner included. Privacy-first.">
 <meta property="og:image" content="icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/mock-screens.css">
 <style>
   :root {
     --bg: #0E1410;
@@ -29,6 +33,7 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     line-height: 1.5;
+    overflow-x: hidden;
   }
   a { color: inherit; text-decoration: none; }
 
@@ -58,10 +63,18 @@
     font-weight: 700;
     font-size: 18px;
     letter-spacing: -0.3px;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
-  .logo img { width: 32px; height: 32px; border-radius: 8px; }
+  .logo img { width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0; }
   nav .links { display: flex; gap: 28px; color: var(--fg-sec); font-size: 14px; align-items: center; }
   nav .links a:hover { color: var(--fg); }
+  /* Hide footer-like nav items on narrow screens; logo + lang switcher remain.
+     Privacy/Terms/Features stay reachable via in-page anchors and footer. */
+  @media (max-width: 600px) {
+    nav .links a { display: none; }
+    nav .links { gap: 0; }
+  }
   nav .lang-switch {
     background: var(--bg-elev);
     border: 1px solid var(--border);
@@ -181,6 +194,18 @@
     background: #000;
   }
   .phone img { width: 100%; display: block; }
+
+  /* Claude-design mock phones (CSS-drawn, 1320×2868) scaled to fit
+     landing's 280px phone frame. width/height of .phone overrides above. */
+  .phone {
+    width: 280px;
+    height: calc(280px * 2868 / 1320);
+    background: #f5f4ee;
+  }
+  .phone .mock {
+    transform: scale(calc(280 / 1320));
+    transform-origin: top left;
+  }
 
   section.features {
     padding: 80px 0;
@@ -316,9 +341,9 @@
 
 <section class="screens">
   <div class="screens-row">
-    <div class="phone"><img src="screen_home.png" alt="Home"></div>
-    <div class="phone"><img src="screen_scan.png" alt="Scan a meal"></div>
-    <div class="phone"><img src="screen_history.png" alt="History"></div>
+    <div class="phone"><div class="mock mock-home" data-mock="home"></div></div>
+    <div class="phone"><div class="mock mock-scan" data-mock="scan"></div></div>
+    <div class="phone"><div class="mock mock-history" data-mock="history"></div></div>
   </div>
 </section>
 
@@ -481,6 +506,12 @@ function applyLang(lang) {
     const key = el.getAttribute('data-i18n-html');
     if (T[key]) el.innerHTML = T[key];
   });
+  // Mock phones use a different bilingual scheme (data-en/data-ru attributes
+  // injected by mock-content.js). Translate them too.
+  document.querySelectorAll('[data-en], [data-ru]').forEach((el) => {
+    const txt = el.getAttribute('data-' + lang);
+    if (txt !== null) el.innerHTML = txt;
+  });
   // Switch button shows the OTHER language (the one you'd switch to)
   const other = lang === 'ru' ? 'en' : 'ru';
   document.getElementById('langSwitch').textContent = other.toUpperCase();
@@ -494,6 +525,14 @@ document.getElementById('langSwitch').addEventListener('click', () => {
   localStorage.setItem('lang', currentLang);
   applyLang(currentLang);
 });
+</script>
+
+<!-- Claude-design mock phones: renders content into [data-mock] containers -->
+<script src="/mock-content.js"></script>
+<script>
+  // mock-content.js injects raw EN strings; re-run applyLang so the
+  // freshly-injected data-en/data-ru attributes pick up the active locale.
+  applyLang(currentLang);
 </script>
 
 </body>
