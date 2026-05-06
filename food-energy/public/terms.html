@@ -26,12 +26,12 @@
 <div class="container">
 
 <h1>Terms of Use</h1>
-<p class="updated">Last updated: April 30, 2026</p>
+<p class="updated">Last updated: May 6, 2026</p>
 
 <p>Welcome to Food Energy ("the App"). By using the App, you agree to these Terms of Use. If you do not agree, please do not use the App.</p>
 
 <h2>1. Description of Service</h2>
-<p>Food Energy is a mobile application that uses artificial intelligence to estimate the nutritional content of food from photos and text descriptions, and to look up packaged products by barcode. The App stores your meal history and preferences locally on your device. AI requests are routed through a thin proxy server we operate (Google Cloud Run) and forwarded to third-party AI providers; barcode lookups are sent to Open Food Facts.</p>
+<p>Food Energy is a mobile application that uses artificial intelligence to estimate the nutritional content of food from photos and text descriptions, and to look up packaged products by barcode. The App stores your meal history and preferences locally on your device. AI requests are routed through a thin proxy server we operate (Google Cloud Run) and forwarded to third-party AI providers; barcode lookups are sent to Open Food Facts. Optionally, the App can integrate with Apple Health / Health Connect to read active calories burned and basic profile data (weight, height, date of birth, biological sex) for in-app display and the daily-calorie-target calculator; this integration is opt-in and the data never leaves your device.</p>
 <p>Nutritional estimates are approximate and should not be used as a substitute for professional dietary advice.</p>
 
 <h2>2. Subscription</h2>
@@ -51,6 +51,7 @@
       <li><strong>Android:</strong> Google Play Store &rarr; Subscriptions</li>
     </ul>
   </li>
+  <li><strong>RuStore version:</strong> payment is processed by T-Bank (Tinkoff) acquiring through a hosted payment form opened inside the App. The plan is a one-time payment for the chosen period (month or year) at <strong>299&nbsp;&#8381; / month</strong> or <strong>2,999&nbsp;&#8381; / year</strong>; it does <strong>not</strong> auto-renew. Your access ends at the end of the paid period unless you make another payment.</li>
 </ul>
 
 <h2>3. Free Trial</h2>
@@ -63,6 +64,8 @@
   <li><strong>Google Cloud Platform</strong> (Cloud Run, Firestore) &mdash; hosts the proxy that routes AI requests and stores anonymous abuse-prevention counters (auto-deleted after 48 hours)</li>
   <li><strong>Open Food Facts</strong> &mdash; looks up packaged products by barcode</li>
   <li><strong>RevenueCat</strong> &mdash; manages subscription state and validates store receipts</li>
+  <li><strong>Apple Health</strong> (iOS) / <strong>Health Connect</strong> (Android) &mdash; optional integration; reads active calories burned, weight, height, date of birth and biological sex (where available) for in-app display and the daily-calorie-target calculator. Data stays on your device.</li>
+  <li><strong>T-Bank (Tinkoff)</strong> &mdash; processes one-time card payments in the RuStore version through their hosted payment form (PCI&#8209;DSS compliant). The App never sees or stores card data.</li>
 </ul>
 <p>Use of the App constitutes acceptance of the applicable third-party terms. Please refer to their privacy policies and terms of service for details.</p>
 
