@@ -148,6 +148,13 @@
     box-shadow: 0 12px 30px rgba(66,133,244,0.35);
   }
   .btn.gplay:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(66,133,244,0.45); }
+  .btn.rustore {
+    background: linear-gradient(135deg, #1f1f24, #3a3a44);
+    color: white;
+    border: none;
+    box-shadow: 0 12px 30px rgba(40,40,50,0.4);
+  }
+  .btn.rustore:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(40,40,50,0.5); }
   .btn.secondary {
     background: var(--bg-elev);
     color: var(--fg);
@@ -325,6 +332,17 @@
           <span class="big" data-i18n="storeGooglePlay">Google Play</span>
         </span>
       </a>
+      <a href="https://www.rustore.ru/catalog/app/com.kitchentech.calorie_ai_app" class="btn rustore" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 7h16v2H4z" fill="currentColor"/>
+          <path d="M5 9v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/>
+          <path d="M9 13h2.5a1.5 1.5 0 0 1 0 3H9v3M11.5 16l2 3"/>
+        </svg>
+        <span class="btn-text-stack">
+          <span class="small" data-i18n="storeAvailableIn">Available in</span>
+          <span class="big" data-i18n="storeRuStore">RuStore</span>
+        </span>
+      </a>
       <a href="/buy/" class="btn secondary">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M20 12V8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>
@@ -396,6 +414,7 @@
       <div class="cta-row">
         <a href="https://apps.apple.com/tr/app/food-energy/id6762185070" class="btn secondary" target="_blank" rel="noopener" data-i18n="storeAppStore">App Store</a>
         <a href="https://play.google.com/store/apps/details?id=com.kitchentech.calorie_ai_app" class="btn secondary" target="_blank" rel="noopener" data-i18n="storeGooglePlay">Google Play</a>
+        <a href="https://www.rustore.ru/catalog/app/com.kitchentech.calorie_ai_app" class="btn secondary" target="_blank" rel="noopener" data-i18n="storeRuStore">RuStore</a>
         <a href="/buy/" class="btn secondary" data-i18n="storePromoBig">Buy promo code</a>
       </div>
     </div>
@@ -425,6 +444,8 @@ const I18N = {
     storeAppStore: 'App Store',
     storeGetItOn: 'Get it on',
     storeGooglePlay: 'Google Play',
+    storeAvailableIn: 'Available in',
+    storeRuStore: 'RuStore',
     storePromoSmall: 'Or pay with card',
     storePromoBig: 'Buy promo code',
     featuresTitle: 'Track food without the friction',
@@ -459,6 +480,8 @@ const I18N = {
     storeAppStore: 'App Store',
     storeGetItOn: 'Доступно в',
     storeGooglePlay: 'Google Play',
+    storeAvailableIn: 'Доступно в',
+    storeRuStore: 'RuStore',
     storePromoSmall: 'Или картой РФ',
     storePromoBig: 'Купить промокод',
     featuresTitle: 'Считай еду без напряга',
