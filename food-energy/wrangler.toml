@@ -1,9 +1,0 @@
-name = "food-energy-landing"
-compatibility_date = "2026-04-28"
-
-routes = [
-  { pattern = "food-energy.kitchentech.work", custom_domain = true }
-]
-
-[assets]
-directory = "./public"
