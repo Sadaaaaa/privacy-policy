@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fridgy — Shared sticky notes for your home</title>
+<meta name="description" content="A cozy family to-do app. Stick notes on a shared 'fridge'. Real-time sync, invite codes, no ads.">
+<meta property="og:title" content="Fridgy — Sticky notes for your family">
+<meta property="og:description" content="Like the notes on your fridge, but in your pocket. Shared with the people you live with.">
+<meta property="og:image" content="icon.svg">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<style>
+  :root {
+    --bg: #F6F2EC;
+    --bg-dim: #ECE6DC;
+    --bg-card: #FFFDF7;
+    --ink: #2E2A24;
+    --ink-sec: #6B655C;
+    --ink-muted: #948D82;
+    --accent: #E8B86A;
+    --accent-2: #D89A45;
+    --paper-yellow: #FFF1A8;
+    --paper-blue: #BEE3F8;
+    --paper-green: #C8E6C9;
+    --paper-pink: #FAD1DC;
+    --border: rgba(46, 42, 36, 0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  body {
+    background-image:
+      radial-gradient(circle at 10% 0%, rgba(232,184,106,0.18), transparent 50%),
+      radial-gradient(circle at 90% 5%, rgba(250,209,220,0.12), transparent 55%);
+    background-attachment: fixed;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav {
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700; font-size: 18px; letter-spacing: -0.3px;
+  }
+  .logo img { width: 32px; height: 32px; }
+  nav .links { display: flex; gap: 24px; color: var(--ink-sec); font-size: 14px; }
+  nav .links a:hover { color: var(--ink); }
+
+  /* Hero */
+  header.hero { padding: 60px 0 40px; text-align: center; }
+  .hero img.icon {
+    width: 112px; height: 112px;
+    margin-bottom: 24px;
+    filter: drop-shadow(0 12px 32px rgba(232,184,106,0.45));
+  }
+  h1 {
+    font-size: clamp(40px, 6vw, 68px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+  .hero p.sub {
+    font-size: clamp(17px, 2vw, 20px);
+    color: var(--ink-sec);
+    max-width: 580px;
+    margin: 0 auto 32px;
+  }
+  .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 24px;
+    border-radius: 999px;
+    font-weight: 600; font-size: 15px;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    border: 1px solid var(--border);
+  }
+  .btn.primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: white;
+    border: none;
+    box-shadow: 0 10px 26px rgba(232,184,106,0.4);
+  }
+  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(232,184,106,0.5); }
+  .btn.secondary { background: var(--bg-card); color: var(--ink); }
+  .btn.secondary:hover { background: #FFFFFF; }
+
+  /* Fridge showcase */
+  section.fridge {
+    padding: 32px 0 80px;
+  }
+  .fridge-frame {
+    max-width: 720px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, #FCFAF5 0%, #ECE6DC 100%);
+    border-radius: 32px;
+    padding: 56px 36px;
+    box-shadow:
+      0 32px 64px rgba(46,42,36,0.10),
+      0 0 0 1px var(--border),
+      inset 0 1px 0 rgba(255,255,255,0.8);
+    position: relative;
+  }
+  /* Tiny magnet at top */
+  .fridge-frame::before {
+    content: "";
+    position: absolute;
+    top: 22px; left: 50%;
+    transform: translateX(-50%);
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  @media (min-width: 640px) { .notes-grid { grid-template-columns: repeat(3, 1fr); } }
+  .note {
+    border-radius: 14px;
+    padding: 18px 16px;
+    box-shadow: 0 8px 18px rgba(46,42,36,0.12);
+    font-size: 15px;
+    color: var(--ink);
+    min-height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .note .meta {
+    font-size: 12px;
+    color: rgba(46,42,36,0.55);
+    margin-top: 10px;
+  }
+  .note.yellow { background: var(--paper-yellow); transform: rotate(-1.5deg); }
+  .note.blue   { background: var(--paper-blue);   transform: rotate(1deg); }
+  .note.green  { background: var(--paper-green);  transform: rotate(-0.5deg); }
+  .note.pink   { background: var(--paper-pink);   transform: rotate(2deg); }
+  .note.done {
+    opacity: 0.55;
+    text-decoration: line-through;
+  }
+
+  /* Features */
+  section.features { padding: 80px 0; border-top: 1px solid var(--border); }
+  .section-head { text-align: center; margin-bottom: 48px; }
+  .section-head h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800; letter-spacing: -1px; margin-bottom: 12px;
+  }
+  .section-head p { color: var(--ink-sec); font-size: 17px; max-width: 540px; margin: 0 auto; }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .feature {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 26px;
+  }
+  .feature .icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(232,184,106,0.18), rgba(216,154,69,0.10));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .feature h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .feature p { color: var(--ink-sec); font-size: 15px; }
+
+  /* CTA bottom */
+  section.cta { padding: 80px 0 60px; text-align: center; }
+  .cta-card {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border-radius: 28px;
+    padding: 56px 28px;
+    box-shadow: 0 24px 60px rgba(232,184,106,0.30);
+  }
+  .cta-card h2 {
+    color: white;
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 800; letter-spacing: -1px; margin-bottom: 12px;
+  }
+  .cta-card p { color: rgba(255,255,255,0.92); font-size: 17px; margin-bottom: 26px; }
+  .cta-card .btn.secondary {
+    background: rgba(255,255,255,0.18); color: white;
+    border: 1px solid rgba(255,255,255,0.28);
+  }
+  .cta-card .btn.secondary:hover { background: rgba(255,255,255,0.30); }
+
+  /* Footer */
+  footer {
+    padding: 48px 0 60px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--ink-muted);
+    font-size: 14px;
+  }
+  footer .links {
+    display: flex; gap: 22px; justify-content: center;
+    margin-bottom: 16px; flex-wrap: wrap;
+  }
+  footer a:hover { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <nav>
+    <div class="logo">
+      <img src="icon.svg" alt="Fridgy">
+      Fridgy
+    </div>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <img src="icon.svg" alt="Fridgy icon" class="icon">
+    <h1>The fridge,<br>but everywhere.</h1>
+    <p class="sub">Shared sticky notes for the people you live with. Groceries, reminders, the small things — synced the moment anyone writes them down.</p>
+    <div class="cta-row">
+      <a href="#" class="btn primary"><span>Get it on Google Play</span></a>
+      <a href="#" class="btn secondary"><span>App Store · soon</span></a>
+    </div>
+  </header>
+</div>
+
+<section class="fridge">
+  <div class="container">
+    <div class="fridge-frame">
+      <div class="notes-grid">
+        <div class="note yellow">
+          Buy milk &amp; eggs
+          <div class="meta">Mom · today</div>
+        </div>
+        <div class="note blue">
+          Pick up Sam at 4pm
+          <div class="meta">Dad · 4:00 PM</div>
+        </div>
+        <div class="note green done">
+          Pay electricity bill
+          <div class="meta">Anyone · done</div>
+        </div>
+        <div class="note pink">
+          Call grandma
+          <div class="meta">Mia · Sunday</div>
+        </div>
+        <div class="note yellow">
+          Bring back library books
+          <div class="meta">Anyone · Fri</div>
+        </div>
+        <div class="note blue">
+          Don't forget the cake
+          <div class="meta">Mom · Sat 6pm</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-head">
+      <h2>Small notes, big together.</h2>
+      <p>Fridgy stays out of your way. No projects, no priorities, no quarterly review — just things the household needs to remember.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="icon">🏠</div>
+        <h3>One fridge per family</h3>
+        <p>Everyone in the household sees the same board. Invite by code — no email lists, no profiles.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">⚡</div>
+        <h3>Real-time sync</h3>
+        <p>Your partner adds milk to the list while you're at the store. You see it before you leave the dairy aisle.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🎨</div>
+        <h3>Four cozy colors</h3>
+        <p>Yellow, blue, green, pink. Slightly tilted, lightly shadowed. Looks like the real thing on a real fridge.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">⏰</div>
+        <h3>Optional due dates</h3>
+        <p>Stick a time on a note when it matters. Skip it when it doesn't.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🕶️</div>
+        <h3>Guest mode</h3>
+        <p>Try it without signing up. Create an account later to share with anyone.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔒</div>
+        <h3>Only what we need</h3>
+        <p>No ads, no analytics SDKs, no location, no contacts. The notes belong to your family — and stay there.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <div class="cta-card">
+      <h2>Bring your family's notes home.</h2>
+      <p>Free to download. Free to use.</p>
+      <div class="cta-row">
+        <a href="#" class="btn secondary">Google Play</a>
+        <a href="#" class="btn secondary">App Store · soon</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="delete-account.html">Delete Account</a>
+      <a href="mailto:sergmochalin@gmail.com">Contact</a>
+    </div>
+    <div>© 2026 KitchenTech. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+name = "notti"
+compatibility_date = "2026-05-21"
+
+[assets]
+directory = "./public"
+
+# Custom domain: wrangler automatically creates the DNS record + SSL cert
+# in the kitchentech.work zone (which is already on this Cloudflare account).
+[[routes]]
+pattern = "notti.kitchentech.work"
+custom_domain = true
