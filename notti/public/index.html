@@ -55,8 +55,21 @@
     font-weight: 700; font-size: 18px; letter-spacing: -0.3px;
   }
   .logo img { width: 32px; height: 32px; }
-  nav .links { display: flex; gap: 24px; color: var(--ink-sec); font-size: 14px; }
+  nav .links { display: flex; align-items: center; gap: 24px; color: var(--ink-sec); font-size: 14px; }
   nav .links a:hover { color: var(--ink); }
+  nav .lang-switch {
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-sec);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  nav .lang-switch:hover { color: var(--ink); border-color: var(--accent); }
 
   /* Hero */
   header.hero { padding: 60px 0 40px; text-align: center; }
@@ -231,19 +244,20 @@
       Fridgy
     </div>
     <div class="links">
-      <a href="#features">Features</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
+      <a href="#features" data-i18n="navFeatures">Features</a>
+      <a href="privacy.html" data-i18n="navPrivacy">Privacy</a>
+      <a href="terms.html" data-i18n="navTerms">Terms</a>
+      <button class="lang-switch" id="langSwitch">RU</button>
     </div>
   </nav>
 
   <header class="hero">
     <img src="icon.svg" alt="Fridgy icon" class="icon">
-    <h1>The fridge,<br>but everywhere.</h1>
-    <p class="sub">Shared sticky notes for the people you live with. Groceries, reminders, the small things — synced the moment anyone writes them down.</p>
+    <h1 data-i18n-html="heroTitle">The fridge,<br>but everywhere.</h1>
+    <p class="sub" data-i18n="heroSub">Shared sticky notes for the people you live with. Groceries, reminders, the small things — synced the moment anyone writes them down.</p>
     <div class="cta-row">
-      <a href="#" class="btn primary"><span>Get it on Google Play</span></a>
-      <a href="#" class="btn secondary"><span>App Store · soon</span></a>
+      <a href="#" class="btn primary"><span data-i18n="ctaGooglePlay">Get it on Google Play</span></a>
+      <a href="#" class="btn secondary"><span data-i18n="ctaAppStoreSoon">App Store · soon</span></a>
     </div>
   </header>
 </div>
@@ -253,28 +267,28 @@
     <div class="fridge-frame">
       <div class="notes-grid">
         <div class="note yellow">
-          Buy milk &amp; eggs
-          <div class="meta">Mom · today</div>
+          <span data-i18n="note1">Buy milk &amp; eggs</span>
+          <div class="meta" data-i18n="note1meta">Mom · today</div>
         </div>
         <div class="note blue">
-          Pick up Sam at 4pm
-          <div class="meta">Dad · 4:00 PM</div>
+          <span data-i18n="note2">Pick up Sam at 4pm</span>
+          <div class="meta" data-i18n="note2meta">Dad · 4:00 PM</div>
         </div>
         <div class="note green done">
-          Pay electricity bill
-          <div class="meta">Anyone · done</div>
+          <span data-i18n="note3">Pay electricity bill</span>
+          <div class="meta" data-i18n="note3meta">Anyone · done</div>
         </div>
         <div class="note pink">
-          Call grandma
-          <div class="meta">Mia · Sunday</div>
+          <span data-i18n="note4">Call grandma</span>
+          <div class="meta" data-i18n="note4meta">Mia · Sunday</div>
         </div>
         <div class="note yellow">
-          Bring back library books
-          <div class="meta">Anyone · Fri</div>
+          <span data-i18n="note5">Bring back library books</span>
+          <div class="meta" data-i18n="note5meta">Anyone · Fri</div>
         </div>
         <div class="note blue">
-          Don't forget the cake
-          <div class="meta">Mom · Sat 6pm</div>
+          <span data-i18n="note6">Don't forget the cake</span>
+          <div class="meta" data-i18n="note6meta">Mom · Sat 6pm</div>
         </div>
       </div>
     </div>
@@ -284,39 +298,39 @@
 <section class="features" id="features">
   <div class="container">
     <div class="section-head">
-      <h2>Small notes, big together.</h2>
-      <p>Fridgy stays out of your way. No projects, no priorities, no quarterly review — just things the household needs to remember.</p>
+      <h2 data-i18n="featuresTitle">Small notes, big together.</h2>
+      <p data-i18n="featuresSub">Fridgy stays out of your way. No projects, no priorities, no quarterly review — just things the household needs to remember.</p>
     </div>
     <div class="feature-grid">
       <div class="feature">
         <div class="icon">🏠</div>
-        <h3>One fridge per family</h3>
-        <p>Everyone in the household sees the same board. Invite by code — no email lists, no profiles.</p>
+        <h3 data-i18n="f1Title">One fridge per family</h3>
+        <p data-i18n="f1Body">Everyone in the household sees the same board. Invite by code — no email lists, no profiles.</p>
       </div>
       <div class="feature">
         <div class="icon">⚡</div>
-        <h3>Real-time sync</h3>
-        <p>Your partner adds milk to the list while you're at the store. You see it before you leave the dairy aisle.</p>
+        <h3 data-i18n="f2Title">Real-time sync</h3>
+        <p data-i18n="f2Body">Your partner adds milk to the list while you're at the store. You see it before you leave the dairy aisle.</p>
       </div>
       <div class="feature">
         <div class="icon">🎨</div>
-        <h3>Four cozy colors</h3>
-        <p>Yellow, blue, green, pink. Slightly tilted, lightly shadowed. Looks like the real thing on a real fridge.</p>
+        <h3 data-i18n="f3Title">Four cozy colors</h3>
+        <p data-i18n="f3Body">Yellow, blue, green, pink. Slightly tilted, lightly shadowed. Looks like the real thing on a real fridge.</p>
       </div>
       <div class="feature">
         <div class="icon">⏰</div>
-        <h3>Optional due dates</h3>
-        <p>Stick a time on a note when it matters. Skip it when it doesn't.</p>
+        <h3 data-i18n="f4Title">Optional due dates</h3>
+        <p data-i18n="f4Body">Stick a time on a note when it matters. Skip it when it doesn't.</p>
       </div>
       <div class="feature">
         <div class="icon">🕶️</div>
-        <h3>Guest mode</h3>
-        <p>Try it without signing up. Create an account later to share with anyone.</p>
+        <h3 data-i18n="f5Title">Guest mode</h3>
+        <p data-i18n="f5Body">Try it without signing up. Create an account later to share with anyone.</p>
       </div>
       <div class="feature">
         <div class="icon">🔒</div>
-        <h3>Only what we need</h3>
-        <p>No ads, no analytics SDKs, no location, no contacts. The notes belong to your family — and stay there.</p>
+        <h3 data-i18n="f6Title">Only what we need</h3>
+        <p data-i18n="f6Body">No ads, no analytics SDKs, no location, no contacts. The notes belong to your family — and stay there.</p>
       </div>
     </div>
   </div>
@@ -325,11 +339,11 @@
 <section class="cta">
   <div class="container">
     <div class="cta-card">
-      <h2>Bring your family's notes home.</h2>
-      <p>Free to download. Free to use.</p>
+      <h2 data-i18n="ctaTitle">Bring your family's notes home.</h2>
+      <p data-i18n="ctaSub">Free to download. Free to use.</p>
       <div class="cta-row">
-        <a href="#" class="btn secondary">Google Play</a>
-        <a href="#" class="btn secondary">App Store · soon</a>
+        <a href="#" class="btn secondary" data-i18n="ctaGooglePlayShort">Google Play</a>
+        <a href="#" class="btn secondary" data-i18n="ctaAppStoreSoon">App Store · soon</a>
       </div>
     </div>
   </div>
@@ -338,14 +352,128 @@
 <footer>
   <div class="container">
     <div class="links">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-      <a href="delete-account.html">Delete Account</a>
-      <a href="mailto:sergmochalin@gmail.com">Contact</a>
+      <a href="privacy.html" data-i18n="footerPrivacy">Privacy Policy</a>
+      <a href="terms.html" data-i18n="footerTerms">Terms of Service</a>
+      <a href="delete-account.html" data-i18n="footerDelete">Delete Account</a>
+      <a href="mailto:sergmochalin@gmail.com" data-i18n="footerContact">Contact</a>
     </div>
-    <div>© 2026 KitchenTech. All rights reserved.</div>
+    <div data-i18n="footerCopyright">© 2026 KitchenTech. All rights reserved.</div>
   </div>
 </footer>
+
+<script>
+const I18N = {
+  en: {
+    navFeatures: 'Features',
+    navPrivacy: 'Privacy',
+    navTerms: 'Terms',
+    heroTitle: 'The fridge,<br>but everywhere.',
+    heroSub: 'Shared sticky notes for the people you live with. Groceries, reminders, the small things — synced the moment anyone writes them down.',
+    ctaGooglePlay: 'Get it on Google Play',
+    ctaGooglePlayShort: 'Google Play',
+    ctaAppStoreSoon: 'App Store · soon',
+    note1: 'Buy milk &amp; eggs',          note1meta: 'Mom · today',
+    note2: 'Pick up Sam at 4pm',          note2meta: 'Dad · 4:00 PM',
+    note3: 'Pay electricity bill',        note3meta: 'Anyone · done',
+    note4: 'Call grandma',                note4meta: 'Mia · Sunday',
+    note5: 'Bring back library books',    note5meta: 'Anyone · Fri',
+    note6: "Don't forget the cake",       note6meta: 'Mom · Sat 6pm',
+    featuresTitle: 'Small notes, big together.',
+    featuresSub: 'Fridgy stays out of your way. No projects, no priorities, no quarterly review — just things the household needs to remember.',
+    f1Title: 'One fridge per family',
+    f1Body: 'Everyone in the household sees the same board. Invite by code — no email lists, no profiles.',
+    f2Title: 'Real-time sync',
+    f2Body: "Your partner adds milk to the list while you're at the store. You see it before you leave the dairy aisle.",
+    f3Title: 'Four cozy colors',
+    f3Body: 'Yellow, blue, green, pink. Slightly tilted, lightly shadowed. Looks like the real thing on a real fridge.',
+    f4Title: 'Optional due dates',
+    f4Body: "Stick a time on a note when it matters. Skip it when it doesn't.",
+    f5Title: 'Guest mode',
+    f5Body: 'Try it without signing up. Create an account later to share with anyone.',
+    f6Title: 'Only what we need',
+    f6Body: 'No ads, no analytics SDKs, no location, no contacts. The notes belong to your family — and stay there.',
+    ctaTitle: "Bring your family's notes home.",
+    ctaSub: 'Free to download. Free to use.',
+    footerPrivacy: 'Privacy Policy',
+    footerTerms: 'Terms of Service',
+    footerDelete: 'Delete Account',
+    footerContact: 'Contact',
+    footerCopyright: '© 2026 KitchenTech. All rights reserved.',
+  },
+  ru: {
+    navFeatures: 'Возможности',
+    navPrivacy: 'Приватность',
+    navTerms: 'Условия',
+    heroTitle: 'Холодильник,<br>но повсюду.',
+    heroSub: 'Общие стикеры-заметки для тех, с кем вы живёте. Продукты, напоминания, мелочи — всё синхронизируется в тот же момент, как кто-то их записал.',
+    ctaGooglePlay: 'Загрузить в Google Play',
+    ctaGooglePlayShort: 'Google Play',
+    ctaAppStoreSoon: 'App Store · скоро',
+    note1: 'Купить молоко и яйца',         note1meta: 'Мама · сегодня',
+    note2: 'Забрать Сэма в 16:00',         note2meta: 'Папа · 16:00',
+    note3: 'Оплатить электричество',       note3meta: 'Любой · готово',
+    note4: 'Позвонить бабушке',            note4meta: 'Мия · воскресенье',
+    note5: 'Вернуть книги в библиотеку',   note5meta: 'Любой · пт',
+    note6: 'Не забыть торт',               note6meta: 'Мама · сб 18:00',
+    featuresTitle: 'Маленькие заметки, большая семья.',
+    featuresSub: 'Fridgy не мешает. Никаких проектов, приоритетов и квартальных отчётов — только то, что нужно помнить всей семье.',
+    f1Title: 'Один холодильник на семью',
+    f1Body: 'Все домашние видят одну и ту же доску. Приглашение по коду — без списков email и профилей.',
+    f2Title: 'Синхронизация в реальном времени',
+    f2Body: 'Партнёр добавляет молоко в список, пока вы в магазине. Вы видите это ещё до того, как уйдёте от молочного отдела.',
+    f3Title: 'Четыре уютных цвета',
+    f3Body: 'Жёлтый, синий, зелёный, розовый. Слегка наклонены, с лёгкой тенью. Выглядят как настоящие стикеры на настоящем холодильнике.',
+    f4Title: 'Сроки по желанию',
+    f4Body: 'Поставьте время на заметку, когда это важно. Пропустите, когда не нужно.',
+    f5Title: 'Гостевой режим',
+    f5Body: 'Попробуйте без регистрации. Создайте аккаунт позже, чтобы делиться с кем угодно.',
+    f6Title: 'Только то, что нужно',
+    f6Body: 'Без рекламы, без аналитики, без геолокации и доступа к контактам. Заметки принадлежат вашей семье — и остаются у вас.',
+    ctaTitle: 'Принесите семейные заметки домой.',
+    ctaSub: 'Бесплатно скачать. Бесплатно пользоваться.',
+    footerPrivacy: 'Политика конфиденциальности',
+    footerTerms: 'Условия использования',
+    footerDelete: 'Удалить аккаунт',
+    footerContact: 'Контакты',
+    footerCopyright: '© 2026 KitchenTech. Все права защищены.',
+  },
+};
+
+function detectLang() {
+  const stored = localStorage.getItem('lang');
+  if (stored === 'en' || stored === 'ru') return stored;
+  const browser = (navigator.language || 'en').toLowerCase();
+  return browser.startsWith('ru') ? 'ru' : 'en';
+}
+
+function applyLang(lang) {
+  const T = I18N[lang];
+  document.documentElement.lang = lang;
+  document.title = lang === 'ru'
+    ? 'Fridgy — Общие стикеры-заметки для вашего дома'
+    : 'Fridgy — Shared sticky notes for your home';
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const key = el.getAttribute('data-i18n');
+    if (T[key] != null) el.innerHTML = T[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+    const key = el.getAttribute('data-i18n-html');
+    if (T[key] != null) el.innerHTML = T[key];
+  });
+  // Switch button shows the OTHER language (the one you'd switch to)
+  const other = lang === 'ru' ? 'en' : 'ru';
+  document.getElementById('langSwitch').textContent = other.toUpperCase();
+}
+
+let currentLang = detectLang();
+applyLang(currentLang);
+
+document.getElementById('langSwitch').addEventListener('click', () => {
+  currentLang = currentLang === 'ru' ? 'en' : 'ru';
+  localStorage.setItem('lang', currentLang);
+  applyLang(currentLang);
+});
+</script>
 
 </body>
 </html>
