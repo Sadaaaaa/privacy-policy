@@ -41,7 +41,7 @@
 <div class="container">
 
 <h1>Privacy Policy</h1>
-<p class="updated">Last updated: May 9, 2026</p>
+<p class="updated">Last updated: June 11, 2026</p>
 
 <p>Food Energy ("the App") respects your privacy. This Privacy Policy explains what data we collect, how we use it, and your rights regarding your information.</p>
 
@@ -77,7 +77,11 @@
 </ul>
 <p>Health data is read on demand for in-app display and calculation only. It is <strong>never transmitted to our servers</strong>, never sent to AI providers, and never shared with third parties. You can revoke access at any time through your system settings (iOS: Settings &rarr; Privacy &amp; Security &rarr; Health; Android: Settings &rarr; Health Connect &rarr; App permissions). Disabling the Health toggle in the App's Profile screen also stops further reads.</p>
 
-<h3 style="font-size:16px; font-weight:600; margin:16px 0 8px;">1.7 Advertising</h3>
+<h3 style="font-size:16px; font-weight:600; margin:16px 0 8px;">1.7 Cloud backup (optional)</h3>
+<p>If you sign in with <strong>Apple</strong> or <strong>Google</strong> on the Account screen, we create an account and back up your food diary so you can restore it on another device. Linked to your account, we store: your meals (name, calories, macros, weight, date), your daily goal and body metrics, meal photos you added, and basic account info from your sign-in provider (a user identifier, plus your email and name if provided).</p>
+<p>This data is stored with <strong>Google Firebase</strong> (Authentication, Cloud Firestore, Cloud Storage) on servers located in the <strong>European Union</strong>. Backup is entirely optional &mdash; if you do not sign in, none of your diary leaves your device. <strong>This feature is not available in the RuStore version of the App.</strong> You can delete your account and all cloud data at any time via &ldquo;Delete account &amp; data&rdquo; on the Account screen (see also our <a href="/delete-account">account deletion page</a>).</p>
+
+<h3 style="font-size:16px; font-weight:600; margin:16px 0 8px;">1.8 Advertising</h3>
 <p>The App displays optional rewarded video ads &mdash; you watch a short ad voluntarily to earn one extra free scan. Two ad networks are used depending on your device's region:</p>
 <ul>
   <li><strong>Google AdMob</strong> &mdash; for users outside the Russian Federation</li>
@@ -91,11 +95,20 @@
 </ul>
 <p>For full details, see the networks' privacy policies linked in Section 8.</p>
 
-<h3 style="font-size:16px; font-weight:600; margin:16px 0 8px;">1.8 Data we do NOT collect</h3>
+<h3 style="font-size:16px; font-weight:600; margin:16px 0 8px;">1.9 Analytics &amp; crash reporting</h3>
+<p>To understand how the App is used and to fix problems, we use:</p>
 <ul>
-  <li>We do not collect your name, email, or phone number</li>
-  <li>We do not use behaviour analytics SDKs (Firebase Analytics, Mixpanel, Amplitude, etc.)</li>
-  <li>We do not store your photos or meal descriptions on our servers</li>
+  <li><strong>Google Firebase Analytics</strong> &mdash; pseudonymous usage events (screens opened, scans started, features used) and basic device/locale properties, not linked to your name.</li>
+  <li><strong>Google Firebase Crashlytics</strong> &mdash; crash and error reports (device model, OS version, stack traces) to diagnose and fix issues.</li>
+  <li><strong>myTracker (VK)</strong> &mdash; on the Android build distributed via RuStore only, for install attribution; initialized only in the RuStore build.</li>
+</ul>
+<p>These services receive device and usage data on a pseudonymous basis and do not receive your meal content.</p>
+
+<h3 style="font-size:16px; font-weight:600; margin:16px 0 8px;">1.10 Data we do NOT collect</h3>
+<ul>
+  <li>We do not collect your name or email <em>unless you sign in for the optional cloud backup (see 1.7)</em></li>
+  <li>We do not store your meal photos or descriptions on our servers <em>unless you sign in for cloud backup</em></li>
+  <li>We do not collect your phone number or precise location</li>
 </ul>
 
 <h2>2. How We Use Your Data</h2>
@@ -109,19 +122,21 @@
   <li><strong>Health data (if you enable the integration):</strong> read from Apple Health / Health Connect for in-app display and calculator prefill only; never leaves your device</li>
   <li><strong>T-Bank (Tinkoff) payment data (RuStore version only):</strong> processed by T-Bank on their hosted form; the App receives only a success / fail signal</li>
   <li><strong>Advertising identifiers and request metadata:</strong> shared with Google AdMob (outside Russia) or Yandex Mobile Ads (inside Russia) when you watch a rewarded ad to earn an extra free scan</li>
+  <li><strong>Account &amp; backup data (only if you sign in):</strong> your account info, food diary, and meal photos stored in Google Firebase (EU) so you can restore them on another device</li>
+  <li><strong>Analytics &amp; crash data:</strong> pseudonymous usage and crash reports (Firebase Analytics / Crashlytics; myTracker on RuStore) to improve the App and fix problems</li>
 </ul>
 
 <h2>3. Data Sharing</h2>
-<p>We do not sell, rent, or share your personal data with third parties. Data is only transmitted to the service providers listed above for the specific purposes described.</p>
+<p>We do not sell or rent your personal data. Data is only transmitted to the service providers listed above for the specific purposes described. If you opt into cloud backup, your diary is stored in Google Firebase (EU) under your own account and is not shared with anyone else.</p>
 
 <h2>4. Data Retention</h2>
-<p>All meal data is stored on your device only. Uninstalling the App permanently deletes all stored data. AI providers process images and text in real-time and do not retain them beyond their standard API processing windows. Anonymous abuse-prevention records in Firestore are automatically deleted after 48 hours. Proxy request metadata logs, if any, are retained no longer than 7 days.</p>
+<p>By default all meal data is stored on your device only; uninstalling the App permanently deletes it. AI providers process images and text in real-time and do not retain them beyond their standard API processing windows. Anonymous abuse-prevention records in Firestore are automatically deleted after 48 hours, and proxy request metadata logs no longer than 7 days. If you sign in for cloud backup, your backed-up data is retained until you delete it &mdash; use &ldquo;Delete account &amp; data&rdquo; in the App (or the <a href="/delete-account">account deletion page</a>) to permanently remove your cloud copy and account.</p>
 
 <h2>5. Data Security</h2>
 <p>All communication between the App, our proxy, and AI providers is encrypted via HTTPS/TLS. On-device data is protected by your device's built-in security (passcode, biometrics, encryption).</p>
 
 <h2>6. Children's Privacy</h2>
-<p>The App is suitable for general audiences. We do not knowingly collect personally identifiable information from any user, regardless of age. If you believe we have inadvertently received such information from a child, please contact us at <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a> so we can address it.</p>
+<p>The App is suitable for general audiences and is not directed at children under 13. The optional account and cloud backup are intended for users aged 13 and older. We do not knowingly collect personal information from children under 13. If you believe a child has provided such information, please contact us at <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a> so we can delete it.</p>
 
 <h2>7. Your Rights</h2>
 <p>Since all meal data is stored locally on your device, you have full control over it. You can:</p>
@@ -129,6 +144,7 @@
   <li>View all your data within the App (History screen)</li>
   <li>Delete individual meals or all data from the App settings</li>
   <li>Uninstall the App to permanently remove all locally stored data</li>
+  <li>If you used cloud backup: delete your account and all cloud data via &ldquo;Delete account &amp; data&rdquo; on the Account screen, or see the <a href="/delete-account">account deletion page</a></li>
 </ul>
 
 <h2>8. Third-Party Services</h2>
@@ -137,7 +153,9 @@
   <li><a href="https://www.anthropic.com/privacy" target="_blank">Anthropic (Claude) Privacy Policy</a></li>
   <li><a href="https://policies.google.com/privacy" target="_blank">Google (Gemini) Privacy Policy</a></li>
   <li><a href="https://mistral.ai/terms/#privacy-policy" target="_blank">Mistral AI Privacy Policy</a></li>
-  <li><a href="https://policies.google.com/privacy" target="_blank">Google Cloud Platform (Cloud Run, Firestore) Privacy Policy</a></li>
+  <li><a href="https://policies.google.com/privacy" target="_blank">Google Firebase / Cloud Platform (Cloud Run, Firestore, Authentication, Cloud Storage) Privacy Policy</a></li>
+  <li><a href="https://www.apple.com/legal/privacy/" target="_blank">Apple (Sign in with Apple) Privacy Policy</a></li>
+  <li><a href="https://legal.my.com/us/mytracker/privacy/" target="_blank">myTracker (VK) Privacy Policy</a> (RuStore version, install attribution)</li>
   <li><a href="https://world.openfoodfacts.org/terms-of-use" target="_blank">Open Food Facts Terms of Use</a></li>
   <li><a href="https://www.revenuecat.com/privacy/" target="_blank">RevenueCat Privacy Policy</a></li>
   <li><a href="https://www.tbank.ru/about/site/" target="_blank">T-Bank (Tinkoff) Privacy Policy</a> (RuStore version, payment processing)</li>
