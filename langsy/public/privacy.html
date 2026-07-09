@@ -35,7 +35,7 @@
 </head>
 <body>
 <h1>Privacy Policy</h1>
-<p class="meta">Last updated: July 4, 2026 · App: Langsy (<code>com.kitchentech.convy</code>)</p>
+<p class="meta">Last updated: July 8, 2026 · App: Langsy (<code>com.kitchentech.convy</code>)</p>
 
 <p>This Privacy Policy describes how Langsy ("we", "our", "the app") collects, uses, and protects information when you use the mobile application. By using Langsy you agree to the practices described below.</p>
 
@@ -46,6 +46,8 @@
   <li><strong>Conversation content.</strong> The text of your chats with the AI tutor, lessons you complete, and your language level (CEFR) are stored on our servers so you can resume across sessions and devices.</li>
   <li><strong>Device metadata.</strong> Time zone offset (used to compute your local day for streaks and usage limits), app version, and platform (iOS / Android).</li>
   <li><strong>Profile photo (optional).</strong> If you upload an avatar or sign in with Google, your profile photo URL is stored.</li>
+  <li><strong>Usage analytics.</strong> We use Google Firebase Analytics to understand how the app is used (screens viewed, features used, session and retention metrics) via an app-instance identifier. This is not linked to an advertising identifier and is not used to track you across other apps or websites.</li>
+  <li><strong>Crash diagnostics.</strong> We use Google Firebase Crashlytics to capture crash reports and diagnostics (device model, OS version, app version, stack traces, and a Firebase installation identifier) so we can diagnose and fix problems.</li>
 </ul>
 <p>We do <strong>not</strong> collect precise location, contacts, calendar, browsing history, or advertising identifiers.</p>
 
@@ -55,6 +57,7 @@
   <li>To track your progress, streaks, XP and CEFR level over time.</li>
   <li>To enforce freemium usage limits (per-user quotas).</li>
   <li>To authenticate you across devices and protect your account.</li>
+  <li>To measure app usage and diagnose crashes so we can improve reliability and features.</li>
 </ul>
 
 <h2>3. Third-Party Services</h2>
@@ -62,8 +65,10 @@
 <ul>
   <li><strong>Google Identity</strong> — sign-in and ID-token verification (for accounts created via Google Sign-In).</li>
   <li><strong>Apple Sign In</strong> — sign-in and ID-token verification (for accounts created via Sign in with Apple).</li>
-  <li><strong>OpenAI, Google Gemini, Mistral</strong> — large language model responses to your messages. Voice audio may pass through OpenAI Whisper / Google / Deepgram for transcription.</li>
-  <li><strong>ElevenLabs, OpenAI TTS</strong> — synthesize the AI tutor's voice.</li>
+  <li><strong>Google Gemini</strong> — language-model responses, text-to-speech voices, and real-time voice calls ("Call Leo", where your voice audio streams to Google in real time).</li>
+  <li><strong>Deepgram</strong> — speech-to-text transcription of your voice recordings.</li>
+  <li><strong>Microsoft Azure</strong> — pronunciation assessment of your speech.</li>
+  <li><strong>Google Firebase (Analytics &amp; Crashlytics)</strong> — usage analytics and crash diagnostics, as described in section 1.</li>
 </ul>
 <p>We do not sell personal data to third parties and do not share it for advertising.</p>
 
