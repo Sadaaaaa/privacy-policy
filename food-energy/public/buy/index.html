@@ -51,6 +51,12 @@
       radial-gradient(circle at 85% 10%, rgba(76,175,110,0.12), transparent 50%);
     background-attachment: fixed;
   }
+  /* The `hidden` attribute only sets `display: none` through a UA rule, so any
+     author rule with a display of its own silently beats it — `.consent` is
+     `display: flex`, which put the consent to automatic debits on a page that
+     sells a single period. Anything hidden stays hidden. */
+  [hidden] { display: none !important; }
+
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
