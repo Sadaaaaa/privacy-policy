@@ -155,6 +155,33 @@
     line-height: 1.6;
   }
 
+  /* How much, how often — stated before payment, and boxed rather than set as
+     fine print. The acquirer requires the buyer to actually see this before
+     agreeing to automatic debits, and a fourth grey 12px line underneath three
+     other grey 12px lines is not seeing it. */
+  .renew-note {
+    background: rgba(52,199,89,0.08);
+    border: 1px solid rgba(52,199,89,0.35);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--fg-sec);
+    margin-bottom: 16px;
+  }
+  .renew-note b { color: var(--fg); }
+
+  /* Where to write about a refund or a cancellation. Present so that a
+     surprised buyer has somewhere to go that isn't a chargeback. */
+  .support {
+    font-size: 12px;
+    color: var(--fg-muted);
+    line-height: 1.6;
+    margin-top: 16px;
+    text-align: center;
+  }
+  .support a { color: var(--accent); }
+
   .consent {
     display: flex;
     align-items: flex-start;
@@ -282,6 +309,10 @@
   </div>
 </div>
 
+<!-- Filled by JS from the selected plan; shown only when the server reports
+     that automatic renewal is actually available. -->
+<div class="renew-note" id="renewNote" hidden></div>
+
 <div class="field">
   <label for="email" data-i18n="emailLabel">Email for the activation code</label>
   <input type="email" id="email" required autocomplete="email" placeholder="you@example.com">
@@ -299,9 +330,21 @@
   </span>
 </label>
 
+<!-- Consent to the automatic debits themselves, separate from the consent to
+     storing the email: one checkbox cannot stand for two different agreements,
+     and this one has to be ticked by the buyer, never pre-filled. -->
+<label class="consent" id="recurringConsentRow" hidden>
+  <input type="checkbox" id="recurringConsent">
+  <span class="label" data-i18n-html="consentRecurring"></span>
+</label>
+
 <div class="error" id="error"></div>
 
-<button class="pay-btn" id="payBtn" data-i18n="pay" disabled>Pay 199 ₽</button>
+<button class="pay-btn" id="payBtn" data-i18n="pay" disabled>Pay 299 ₽</button>
+
+<div class="support" data-i18n-html="support">
+  Cancelling or want a refund? Write to <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a> and we'll sort it out directly.
+</div>
 
 <div class="footer-note" data-i18n-html="footer">
   Powered by Tinkoff Acquiring (T-Bank). Supports cards, SBP, T-Pay.<br>
@@ -328,6 +371,7 @@ const I18N = {
     planSave: 'SAVE 16%',
     emailLabel: 'Email for the activation code',
     emailHint: "We'll send the code here. One-time use.",
+    emailHintRecurring: "We'll send the activation code and the receipt for every charge here.",
     terms: 'By subscribing you agree to our <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>. Subscription does not auto-renew — purchase a new code when it expires.',
     consent: 'I agree that my email address will be stored on our servers (Google Cloud Firestore) for the sole purpose of delivering the activation code, and automatically deleted after 90 days. Details in the <a href="/privacy">Privacy Policy</a>.',
     footer: 'Powered by Tinkoff Acquiring (T-Bank). Supports cards, SBP, T-Pay.<br>Issues? <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a>',
@@ -337,6 +381,12 @@ const I18N = {
     errConsentRequired: 'Please confirm you agree to the email storage terms.',
     errNetwork: 'Connection error. Please try again.',
     errGeneric: 'Something went wrong. Please try again.',
+    renewNoteMonthly: '<b>299 ₽ will be charged every month</b> until you cancel. The first charge happens as soon as the payment is confirmed.',
+    renewNoteYearly: '<b>2 999 ₽ will be charged once a year</b> until you cancel. The first charge happens as soon as the payment is confirmed.',
+    consentRecurring: 'I agree to automatic recurring charges of the amount above, from the same card or account, until I cancel the subscription.',
+    termsRecurring: 'By subscribing you agree to our <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>. You can cancel automatic renewal at any time — in the app, or by writing to us.',
+    support: "Cancelling or want a refund? Write to <a href=\"mailto:sergmochalin@gmail.com\">sergmochalin@gmail.com</a> and we'll sort it out directly.",
+    errRecurringConsent: 'Please confirm you agree to the recurring charges.',
   },
   ru: {
     brand: 'Food Energy',
@@ -354,6 +404,7 @@ const I18N = {
     planSave: 'ВЫГОДНО 16%',
     emailLabel: 'Email для кода активации',
     emailHint: 'На этот адрес придёт код. Используется один раз.',
+    emailHintRecurring: 'На этот адрес придёт код активации и чеки по каждому списанию.',
     terms: 'Оформляя подписку, вы соглашаетесь с <a href="/terms">офертой</a> и <a href="/privacy">политикой конфиденциальности</a>. Подписка не продлевается автоматически — для продления нужен новый код.',
     consent: 'Я согласен(на), что мой email будет храниться на наших серверах (Google Cloud Firestore) исключительно для доставки кода активации и автоматически удалится через 90 дней. Подробности в <a href="/privacy">политике конфиденциальности</a>.',
     footer: 'Платежи через Tinkoff Acquiring (Т-Банк). Карты, СБП, T-Pay.<br>Проблемы? <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a>',
@@ -363,6 +414,12 @@ const I18N = {
     errConsentRequired: 'Подтвердите согласие на хранение email.',
     errNetwork: 'Ошибка соединения. Попробуйте ещё раз.',
     errGeneric: 'Что-то пошло не так. Попробуйте ещё раз.',
+    renewNoteMonthly: '<b>299 ₽ будут списываться каждый месяц</b>, пока вы не отмените подписку. Первое списание — сразу после подтверждения оплаты.',
+    renewNoteYearly: '<b>2 999 ₽ будут списываться раз в год</b>, пока вы не отмените подписку. Первое списание — сразу после подтверждения оплаты.',
+    consentRecurring: 'Я согласен(на) на регулярные автоматические списания указанной выше суммы с той же карты или счёта до отмены подписки.',
+    termsRecurring: 'Оформляя подписку, вы соглашаетесь с <a href="/terms">офертой</a> и <a href="/privacy">политикой конфиденциальности</a>. Отменить автопродление можно в любой момент — в приложении или письмом нам.',
+    support: 'Отмена подписки или возврат: напишите на <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a> — решим вопрос напрямую.',
+    errRecurringConsent: 'Подтвердите согласие на регулярные списания.',
   },
 };
 
@@ -395,29 +452,77 @@ const payBtn = document.getElementById('payBtn');
 const emailInput = document.getElementById('email');
 const consentInput = document.getElementById('consent');
 const errorEl = document.getElementById('error');
+const termsEl = document.querySelector('.terms');
+const renewNote = document.getElementById('renewNote');
+const recurringConsentRow = document.getElementById('recurringConsentRow');
+const recurringConsent = document.getElementById('recurringConsent');
+
+// Whether this page sells a SUBSCRIPTION (automatic debits) or a one-off code.
+//
+// The server decides, not the page: payments by saved credentials have to be
+// enabled by the bank per terminal, and until they are, a promise of automatic
+// renewal here would be a promise nothing can keep. `?preview=recurring` forces
+// the subscription variant on so the acquirer can review the consent flow
+// before they switch it on — it changes what this page shows, never what the
+// server agrees to do.
+let recurringAvailable = new URLSearchParams(location.search).get('preview') === 'recurring';
+
+function applyMode() {
+  renewNote.hidden = !recurringAvailable;
+  recurringConsentRow.hidden = !recurringAvailable;
+  const hintEl = document.querySelector('.field-hint');
+  if (recurringAvailable) {
+    renewNote.innerHTML = selectedPlan === 'yearly' ? T.renewNoteYearly : T.renewNoteMonthly;
+    if (termsEl) termsEl.innerHTML = T.termsRecurring;
+    // "One-time use" is about a code, not about the payment — under a
+    // subscription it reads as a promise that nothing recurs.
+    if (hintEl) hintEl.textContent = T.emailHintRecurring;
+  } else {
+    // Back to the one-off wording, including after a failed capability fetch.
+    recurringConsent.checked = false;
+    if (termsEl) termsEl.innerHTML = T.terms;
+    if (hintEl) hintEl.textContent = T.emailHint;
+  }
+  updatePayButton();
+}
 
 function isPayable() {
   const email = emailInput.value.trim();
   const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
-  return emailOk && consentInput.checked;
+  return emailOk && consentInput.checked && (!recurringAvailable || recurringConsent.checked);
 }
 
 function updatePayButton() {
   payBtn.textContent = selectedPlan === 'yearly' ? T.payYearly : T.payMonthly;
   payBtn.disabled = !isPayable();
 }
-updatePayButton();
+applyMode();
 
 emailInput.addEventListener('input', updatePayButton);
 consentInput.addEventListener('change', updatePayButton);
+recurringConsent.addEventListener('change', updatePayButton);
 
 planEls.forEach((el) => {
   el.addEventListener('click', () => {
     selectedPlan = el.dataset.plan;
     planEls.forEach((p) => p.classList.toggle('selected', p === el));
-    updatePayButton();
+    // The amount in the note is the one being consented to, so it has to
+    // follow the selected plan.
+    applyMode();
   });
 });
+
+// Ask the proxy whether recurring is live. Failure leaves the page on the
+// one-off wording, which is the honest default: no answer means no mandate.
+fetch('https://food.kitchentech.work/v1/payments/prices')
+  .then((r) => (r.ok ? r.json() : null))
+  .then((data) => {
+    if (data && data.recurring === true && !recurringAvailable) {
+      recurringAvailable = true;
+      applyMode();
+    }
+  })
+  .catch(() => {});
 
 function showError(msg) {
   errorEl.textContent = msg;
@@ -439,6 +544,10 @@ payBtn.addEventListener('click', async () => {
     showError(T.errConsentRequired);
     return;
   }
+  if (recurringAvailable && !recurringConsent.checked) {
+    showError(T.errRecurringConsent);
+    return;
+  }
   payBtn.disabled = true;
   const originalText = payBtn.textContent;
   payBtn.textContent = '...';
@@ -446,7 +555,10 @@ payBtn.addEventListener('click', async () => {
     const response = await fetch('https://food.kitchentech.work/v1/payments/tinkoff-init', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, plan: selectedPlan }),
+      // `recurring` is only sent when the buyer ticked the box for it. The
+      // server ignores it unless the bank has enabled saved credentials, and
+      // echoes back what it actually asked for.
+      body: JSON.stringify({ email, plan: selectedPlan, ...(recurringAvailable && recurringConsent.checked ? { recurring: true } : {}) }),
     });
     if (!response.ok) {
       const data = await response.json().catch(() => ({}));
