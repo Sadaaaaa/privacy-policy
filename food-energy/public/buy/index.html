@@ -235,23 +235,58 @@
     color: var(--accent);
   }
 
-  .pay-btn {
+  /* One control that may be divided in two unequal halves. The radius lives
+     on the row and the halves are square, so with the grey one shown they
+     read as one button with a seam rather than two buttons with a gap. */
+  .pay-row {
+    display: flex;
     width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .pay-btn {
+    flex: 3;
+    min-width: 0;
     background: var(--accent);
     color: #0E1410;
     border: none;
-    border-radius: 14px;
-    padding: 16px;
+    border-radius: 0;
+    padding: 14px 16px;
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
     font-family: inherit;
     transition: opacity 0.15s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    line-height: 1.25;
+  }
+  .pay-btn.once {
+    flex: 2;
+    background: #2A3832;
+    color: var(--fg);
+    font-weight: 600;
   }
   .pay-btn:hover { opacity: 0.9; }
   .pay-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+  .pay-sub {
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.75;
+  }
+  /* Says which half does what, because the halves themselves only have room
+     for two words each. */
+  .two-ways {
+    font-size: 12px;
+    color: var(--fg-muted);
+    line-height: 1.5;
+    margin-top: 10px;
+    text-align: center;
   }
 
   .error {
@@ -277,6 +312,12 @@
   @media (max-width: 480px) {
     .wrap { padding: 24px 16px 60px; }
     h1 { font-size: 22px; }
+    /* On a 320 px screen the grey half is ~100 px wide, and "One-time" wrapped
+       to two lines there, dragging the whole control to 85 px tall. Smaller
+       type on both halves keeps each label on one line; the amounts stay
+       readable, which is the part that must not be guessed at. */
+    .pay-btn { font-size: 15px; padding: 13px 10px; }
+    .pay-sub { font-size: 11px; }
   }
 </style>
 </head>
@@ -346,7 +387,20 @@
 
 <div class="error" id="error"></div>
 
-<button class="pay-btn" id="payBtn" data-i18n="pay" disabled>Pay 299 ₽</button>
+<!-- The grey half appears only when the server reports that automatic
+     renewal is live: before that there is one way to pay, and dividing the
+     button would ask the buyer to choose between a thing and itself. -->
+<div class="pay-row">
+  <button class="pay-btn" id="payBtn" disabled>
+    <span id="payLabel">Pay 299 ₽</span>
+    <span class="pay-sub" id="paySub" hidden></span>
+  </button>
+  <button class="pay-btn once" id="payOnceBtn" hidden>
+    <span id="payOnceLabel"></span>
+    <span class="pay-sub" id="payOnceSub"></span>
+  </button>
+</div>
+<div class="two-ways" id="twoWays" hidden></div>
 
 <div class="support" data-i18n-html="support">
   Cancelling or want a refund? Write to <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a> and we'll sort it out directly.
@@ -383,6 +437,13 @@ const I18N = {
     footer: 'Powered by Tinkoff Acquiring (T-Bank). Supports cards, SBP, T-Pay.<br>Issues? <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a>',
     payMonthly: 'Pay 299 ₽',
     payYearly: 'Pay 2 999 ₽',
+    subscribeLabel: 'Subscribe',
+    subscribeSubMonthly: '299 ₽ / mo',
+    subscribeSubYearly: '2 999 ₽ / yr',
+    onceLabel: 'One-time',
+    onceSubMonthly: '299 ₽',
+    onceSubYearly: '2 999 ₽',
+    twoWays: 'Green: renews automatically until you cancel it. Grey: one period only, nothing is charged again.',
     errInvalidEmail: 'Please enter a valid email address.',
     errConsentRequired: 'Please confirm you agree to the email storage terms.',
     errNetwork: 'Connection error. Please try again.',
@@ -416,6 +477,13 @@ const I18N = {
     footer: 'Платежи через Tinkoff Acquiring (Т-Банк). Карты, СБП, T-Pay.<br>Проблемы? <a href="mailto:sergmochalin@gmail.com">sergmochalin@gmail.com</a>',
     payMonthly: 'Оплатить 299 ₽',
     payYearly: 'Оплатить 2 999 ₽',
+    subscribeLabel: 'Подписка',
+    subscribeSubMonthly: '299 ₽ / мес',
+    subscribeSubYearly: '2 999 ₽ / год',
+    onceLabel: 'Разово',
+    onceSubMonthly: '299 ₽',
+    onceSubYearly: '2 999 ₽',
+    twoWays: 'Зелёная — автопродление, пока вы не отмените подписку. Серая — один период, повторных списаний не будет.',
     errInvalidEmail: 'Введите корректный email.',
     errConsentRequired: 'Подтвердите согласие на хранение email.',
     errNetwork: 'Ошибка соединения. Попробуйте ещё раз.',
@@ -455,6 +523,12 @@ document.querySelectorAll('[data-i18n-html]').forEach((el) => {
 let selectedPlan = 'monthly';
 const planEls = document.querySelectorAll('.plan');
 const payBtn = document.getElementById('payBtn');
+const payLabel = document.getElementById('payLabel');
+const paySub = document.getElementById('paySub');
+const payOnceBtn = document.getElementById('payOnceBtn');
+const payOnceLabel = document.getElementById('payOnceLabel');
+const payOnceSub = document.getElementById('payOnceSub');
+const twoWays = document.getElementById('twoWays');
 const emailInput = document.getElementById('email');
 const consentInput = document.getElementById('consent');
 const errorEl = document.getElementById('error');
@@ -476,6 +550,10 @@ let recurringAvailable = new URLSearchParams(location.search).get('preview') ===
 function applyMode() {
   renewNote.hidden = !recurringAvailable;
   recurringConsentRow.hidden = !recurringAvailable;
+  payOnceBtn.hidden = !recurringAvailable;
+  twoWays.hidden = !recurringAvailable;
+  paySub.hidden = !recurringAvailable;
+  if (recurringAvailable) twoWays.textContent = T.twoWays;
   const hintEl = document.querySelector('.field-hint');
   if (recurringAvailable) {
     renewNote.innerHTML = selectedPlan === 'yearly' ? T.renewNoteYearly : T.renewNoteMonthly;
@@ -492,15 +570,28 @@ function applyMode() {
   updatePayButton();
 }
 
-function isPayable() {
+// The email and the privacy consent are needed either way. The consent to
+// automatic debits gates the green half only — demanding it for a payment that
+// recurs nothing would be asking the buyer to agree to something that isn't
+// about to happen.
+function baseOk() {
   const email = emailInput.value.trim();
-  const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
-  return emailOk && consentInput.checked && (!recurringAvailable || recurringConsent.checked);
+  return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && consentInput.checked;
 }
 
 function updatePayButton() {
-  payBtn.textContent = selectedPlan === 'yearly' ? T.payYearly : T.payMonthly;
-  payBtn.disabled = !isPayable();
+  const yearly = selectedPlan === 'yearly';
+  if (recurringAvailable) {
+    payLabel.textContent = T.subscribeLabel;
+    paySub.textContent = yearly ? T.subscribeSubYearly : T.subscribeSubMonthly;
+    payOnceLabel.textContent = T.onceLabel;
+    payOnceSub.textContent = yearly ? T.onceSubYearly : T.onceSubMonthly;
+    payBtn.disabled = !(baseOk() && recurringConsent.checked);
+    payOnceBtn.disabled = !baseOk();
+  } else {
+    payLabel.textContent = yearly ? T.payYearly : T.payMonthly;
+    payBtn.disabled = !baseOk();
+  }
 }
 applyMode();
 
@@ -538,7 +629,7 @@ function clearError() {
   errorEl.classList.remove('show');
 }
 
-payBtn.addEventListener('click', async () => {
+async function startPayment(button, recurring) {
   clearError();
   const email = emailInput.value.trim();
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
@@ -550,13 +641,15 @@ payBtn.addEventListener('click', async () => {
     showError(T.errConsentRequired);
     return;
   }
-  if (recurringAvailable && !recurringConsent.checked) {
+  if (recurring && !recurringConsent.checked) {
     showError(T.errRecurringConsent);
     return;
   }
   payBtn.disabled = true;
-  const originalText = payBtn.textContent;
-  payBtn.textContent = '...';
+  payOnceBtn.disabled = true;
+  const label = button === payOnceBtn ? payOnceLabel : payLabel;
+  const originalText = label.textContent;
+  label.textContent = '...';
   try {
     const response = await fetch('https://food.kitchentech.work/v1/payments/tinkoff-init', {
       method: 'POST',
@@ -564,7 +657,7 @@ payBtn.addEventListener('click', async () => {
       // `recurring` is only sent when the buyer ticked the box for it. The
       // server ignores it unless the bank has enabled saved credentials, and
       // echoes back what it actually asked for.
-      body: JSON.stringify({ email, plan: selectedPlan, ...(recurringAvailable && recurringConsent.checked ? { recurring: true } : {}) }),
+      body: JSON.stringify({ email, plan: selectedPlan, ...(recurring ? { recurring: true } : {}) }),
     });
     if (!response.ok) {
       const data = await response.json().catch(() => ({}));
@@ -574,12 +667,17 @@ payBtn.addEventListener('click', async () => {
     if (!data.paymentUrl) throw new Error('no_payment_url');
     window.location.href = data.paymentUrl;
   } catch (err) {
-    payBtn.textContent = originalText;
+    label.textContent = originalText;
     updatePayButton(); // restore disabled state based on current validation
     if (err.name === 'TypeError') showError(T.errNetwork);
     else showError(T.errGeneric);
   }
-});
+}
+
+// The green half asks for a mandate only where one is possible; with recurring
+// off it is the one-off payment this page has always sold.
+payBtn.addEventListener('click', () => startPayment(payBtn, recurringAvailable));
+payOnceBtn.addEventListener('click', () => startPayment(payOnceBtn, false));
 </script>
 
 </body>
