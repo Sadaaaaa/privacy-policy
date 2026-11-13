@@ -268,10 +268,18 @@
     background: #2A3832;
     color: var(--fg);
     font-weight: 600;
+    /* The seam that makes this one button and not two. It is drawn rather
+       than left as a colour difference, so it survives the state where both
+       halves are disabled and share a background. */
+    box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.10);
   }
-  .pay-btn:hover { opacity: 0.9; }
+  .pay-btn:not(:disabled):hover { opacity: 0.9; }
+  /* A half that cannot be pressed has to look it. Dimming the green alone
+     left it reading as a live button on a dark page — next to the grey half
+     it was the brighter of the two — so the colour recedes with it. */
   .pay-btn:disabled {
-    opacity: 0.5;
+    background: #1E2721;
+    color: #5C6961;
     cursor: not-allowed;
   }
   .pay-sub {
